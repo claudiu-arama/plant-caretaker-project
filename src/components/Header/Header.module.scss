@@ -1,0 +1,26 @@
+.Header {
+  display: flex;
+  justify-content: space-between;
+  min-height: 24px;
+  padding: 14px 16px 10px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+
+  .AppHeader {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+  }
+  .AppSubHeader {
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.AppName {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  align-content: center;
+}

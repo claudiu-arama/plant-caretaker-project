@@ -1,0 +1,29 @@
+.Main {
+  margin: 3px;
+  border-radius: 2px;
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.05);
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  .SearchField {
+    margin: auto;
+  }
+
+  @media (min-width: 450px) {
+    margin: 20px;
+    min-height: 500px;
+    border-radius: 4px;
+  }
+
+  .plantsRendered {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .plantsQuerried {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

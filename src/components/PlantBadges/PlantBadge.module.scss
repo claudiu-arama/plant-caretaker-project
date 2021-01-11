@@ -1,0 +1,20 @@
+.plantBadgeContainer {
+  height: 250px;
+  width: 160px;
+  background-color: rgba(0, 0, 0, 0.004);
+  box-shadow: 0px 0px 2px 4px rgba(0, 0, 0, 0.07);
+  margin: 10px;
+  border-radius: 4px;
+  border: 1px solid rgb(245, 238, 238);
+
+  p {
+    text-align: center;
+    font-family: monospace;
+  }
+
+  img {
+    position: relative;
+    top: -10px;
+    border-radius: 2px;
+  }
+}

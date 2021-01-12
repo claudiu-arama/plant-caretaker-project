@@ -34,7 +34,10 @@ class Main extends React.Component {
     const searchedPlants = Object.keys(plants)
       .filter(
         (plant) =>
-          plants[plant].name.toLowerCase() === value.toLowerCase() ||
+          (plants[plant].name
+            .toLowerCase()
+            .includes(value.toLowerCase()) &&
+            value.length >= 3) ||
           (plants[plant].species
             .toLowerCase()
             .includes(value.toLowerCase()) &&

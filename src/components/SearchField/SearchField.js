@@ -17,9 +17,7 @@ class SearchField extends React.Component {
           {...this.props}
         />
         {/* add buttons for edit and add plants with forms for adding and editing the selected plants */}
-        <Button type="search">
-          <Icon type="Search" width="22px" />
-        </Button>
+        <Button type="search"></Button>
       </div>
     );
   }

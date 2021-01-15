@@ -9,7 +9,9 @@ const SearchButton = (props) => {
     <div>
       <button
         className={
-          props.type === 'search' ? styles.ButtonStyles : null
+          props.type === 'search'
+            ? styles.SearchButton
+            : styles.AddButton
         }>
         <div> {props.children}</div>
       </button>

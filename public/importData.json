@@ -3,29 +3,51 @@
   "name": "Ryan",
   "species": "Mentha x Piperita",
 "photo" : "https://cdn.shopify.com/s/files/1/0022/5338/9887/products/Mint_in_a_clay_pot_800x.jpg?v=1536872571",
-  "watering": "when soil feels dry",
-  "lighting" : "loves direct sunlight"
+  "watering": "when soil feels dry mint",
+  "lighting" : "loves direct sunlight",
+  "edible":"yes"
 },
 {
   "id": "0002",
   "name": "Becky",
   "species": "Laurus nobilis",
   "photo": "https://media.gettyimages.com/photos/small-laurel-tree-in-flower-pot-isolated-on-white-background-closeup-picture-id1040549464?s=2048x2048",
-  "watering": "when soil feels dry",
-  "lighting" : "loves direct sunlight"},
+  "watering": "when soil feels dry laurel",
+  "lighting" : "loves direct sunlight",
+  "edible":"yes"
+},
 {
   "id": "0003",
   "name": "Tina",
   "species": "Ocimum basilicum",
   "photo": "https://cdn.shopify.com/s/files/1/0064/0604/5807/products/Basil_plant_in_terracotta_pot_800x.jpg?v=1539785082",
-  "watering": "when soil feels dry",
-  "lighting" : "loves direct sunlight"},
+  "watering": "when soil feels dry basil",
+  "lighting" : "loves direct sunlight",
+  "edible":"yes"
+},
 {
   "id": "0004",
   "name": "Meg",
   "species": "Origanum vulgare",
   "photo" : "https://cdn.shopify.com/s/files/1/0022/5338/9887/products/Oregano_in_a_clay_pot_2000x.jpg?v=1536872565",
-  "watering": "when soil feels dry",
-  "lighting" : "loves direct sunlight"
-}]
+  "watering": "when soil feels dry oregano",
+  "lighting" : "loves direct sunlight",
+  "edible":"yes"
+},
+{"id": "005",
+  "name": "Bubu",
+  "species": "Ficus Benjamina",
+  "photo": "https://www.exotenherz.de/media/image/product/2012/lg/bushy-weeping-fig-ficus-benjamini-kinky-white-foliage-12cm-pot.jpg",
+  "watering": "when soil feels dry ficus",
+  "lighting" : "loves direct sunlight",
+  "edible":"no"
+  },
+{"id": "006",
+  "name": "Snickets",
+  "species": "Citrus X Limon",
+  "photo": "https://previews.123rf.com/images/jojjik/jojjik1204/jojjik120400744/13389734-small-citrus-tree-in-the-pot-isolated-on-white.jpg",
+  "watering": "when soil feels dry lemon",
+  "lighting" : "loves direct sunlight",
+  "edible":"no"
+  }]
 }

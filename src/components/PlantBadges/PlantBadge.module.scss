@@ -1,8 +1,24 @@
+$bg: #fff;
+$text: #382b22;
+$light-pink: #fff0f0;
+$pink: #ffe9e9;
+$dark-pink: #f9c4d2;
+$pink-border: #b18597;
+$pink-shadow: #ffe3e2;
+
+* {
+  box-sizing: border-box;
+  &::before,
+  &::after {
+    box-sizing: border-box;
+  }
+}
+
 .plantBadgeContainer {
   height: 250px;
-  width: 160px;
+  width: 162px;
   background-color: rgba(0, 0, 0, 0.004);
-  // box-shadow: 0px 0px 2px 4px rgba(0, 0, 0, 0.07);
+  text-align: center;
   margin: 10px;
   border-radius: 4px;
   border: 1px solid rgb(245, 238, 238);
@@ -19,14 +35,57 @@
     0 -2px 6px 1px rgba(199, 199, 199, 0.55) inset,
     0 2px 4px 2px rgba(255, 255, 255, 0.83) inset;
 
-  p {
-    text-align: center;
-    font-family: monospace;
+  .PlantBadgeName {
+    margin-top: 8px;
   }
 
-  img {
-    position: relative;
-    top: -10px;
-    border-radius: 2px;
+  .PlantBadgeParagraph {
+    text-align: center;
+    margin-top: 4px;
+    margin-bottom: 7px;
+    font-family: monospace;
+  }
+}
+
+.PlantInfo {
+  display: flex;
+  justify-content: space-evenly;
+  align-content: flex-start;
+}
+
+.WateringProperty,
+.EdibleProperty,
+.LightingProperty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 42px;
+  background: #f3f0f1;
+  position: relative;
+  background: #f3f0f1;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  line-height: 100px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  font-weight: semibold;
+
+  box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),
+    6px 6px 10px rgba(0, 0, 0, 0.2);
+  &:hover {
+    opacity: 0.3;
+    box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),
+      6px 6px 10px rgba(0, 0, 0, 0.2);
+    background-color: #3579716e;
+  }
+  &:active {
+    opacity: 1;
+    box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.5),
+      inset 8px 8px 16px rgba(0, 0, 0, 0.1);
+    color: #79e3b6;
   }
 }

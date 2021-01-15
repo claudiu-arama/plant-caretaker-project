@@ -31,27 +31,31 @@ class Main extends React.Component {
       })
       .catch((error) => console.log('Error', error));
   }
+  // search method - check whether obj[key] is undefined
+  // check whether keys param is valid
+  search = (obj, keys, query) => {
+    if (!keys || keys.length === 0) {
+      return false;
+    }
+    return keys.some((key) => {
+      if (!obj[key]) {
+        return false;
+      }
+      return obj[key].toLowerCase().includes(query.toLowerCase());
+    });
+  };
 
-  handleQuery = (event) => {
-    const value = event.target.value;
+  handleQuery = (value) => {
+    // handle return case b4 logic
+    if (value.length < 3) {
+      return;
+    }
     const plants = { ...this.state.plants };
 
-    const searchedPlants = Object.keys(plants)
-      .filter(
-        (plant) =>
-          (plants[plant].name
-            .toLowerCase()
-            .includes(value.toLowerCase()) &&
-            value.length >= 3) ||
-          (plants[plant].species
-            .toLowerCase()
-            .includes(value.toLowerCase()) &&
-            value.length >= 3)
-      )
-      .reduce((acc, plant) => {
-        acc[plant] = plants[plant];
-        return acc;
-      }, {});
+    const searchedPlants = plants.filter((plant) =>
+      this.search(plant, ['name', 'species'], value)
+    );
+    // apply same further down
     this.setState({
       ...this.state,
       query: value,
@@ -69,6 +73,9 @@ class Main extends React.Component {
     console.log(info, id, 'clicked!');
   };
 
+  handleButtonClick = (action, plant) => {
+    console.log({ action, plant });
+  };
   render() {
     const { plants, selectedPlants } = this.state;
     const plantsQuerried = Object.keys(
@@ -80,12 +87,7 @@ class Main extends React.Component {
       <PlantBadge
         {...plants[plant]}
         key={plant.id}
-        ButtonClicked={() =>
-          this.requirePlantInfo(
-            plants[plant].watering,
-            plants[plant].id
-          )
-        }
+        ButtonClicked={this.handleButtonClick}
       />
     ));
     return (
@@ -94,8 +96,8 @@ class Main extends React.Component {
       <div className={styles.Main}>
         <Header />
         <div className={styles.SearchField}>
-          <SearchField onClick={this.handleQuery} />
-          {/* <Button>+</Button> */}
+          <SearchField onChange={this.handleQuery} />
+          <Button>+</Button>
         </div>
         {/* <Form /> */}
 

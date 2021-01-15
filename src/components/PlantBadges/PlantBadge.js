@@ -19,7 +19,11 @@ const plantBadge = (props) => {
       <div className={styles.PlantInfo}>
         <button
           className={styles.WateringProperty}
-          onClick={props.ButtonClicked}>
+          onClick={props.ButtonClicked.bind(
+            this,
+            'watering',
+            props.watering
+          )}>
           <Icon type="Water" width="25px" />
         </button>
         <button
@@ -40,5 +44,9 @@ plantBadge.defaultProps = {
   width: '140px',
   height: '140px',
 };
+
+plantBadge.propTypes = {
+
+}
 
 export default plantBadge;

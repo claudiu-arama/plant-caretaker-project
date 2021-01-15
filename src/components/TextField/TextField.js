@@ -25,7 +25,7 @@ class TextField extends React.Component {
             type="text"
             defaultValue={defaultValue}
             placeholder={placeholder}
-            onChange={onClick}
+            onChange={this.handleInputChange}
           />
           <button type="search" value="search"></button>
         </div>

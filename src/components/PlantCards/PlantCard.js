@@ -1,52 +1,62 @@
 import React from 'react';
-import styles from './PlantBadge.module.scss';
+import styles from './PlantCard.module.scss';
 import Icon from '../../controls/Icons/Icons';
 
-const plantBadge = (props) => {
+const plantCard = (props) => {
   return (
     <div
-      className={styles.plantBadgeContainer}
+      className={styles.plantCardContainer}
       onClick={props.plantAccessed}>
       {/* implement action on badge click -> open new route to full plant page */}
-      <p className={styles.PlantBadgeName}>"{props.name}" </p>
+      <p className={styles.plantCardName}>"{props.name}" </p>
 
       <img
         src={props.photo}
         height={props.height}
         width={props.width}
       />
-      <p className={styles.PlantBadgeParagraph}>{props.species}</p>
+      <p className={styles.plantCardParagraph}>{props.species}</p>
       <div className={styles.PlantInfo}>
         <button
           className={styles.WateringProperty}
-          onClick={props.ButtonClicked.bind(
+          onClick={props.handleButtonClick.bind(
             this,
             'watering',
-            props.watering
+            props.watering,
+            props.photo
           )}>
           <Icon type="Water" width="25px" />
         </button>
         <button
           className={styles.EdibleProperty}
-          onClick={props.ButtonClicked}>
+          onClick={props.handleButtonClick.bind(
+            this,
+            'edible',
+            props.edible,
+            props.photo
+          )}>
           <Icon type="Edible" width="25px" />
         </button>
         <button
           className={styles.LightingProperty}
-          onClick={props.ButtonClicked}>
+          onClick={props.handleButtonClick.bind(
+            this,
+            'lighting',
+            props.lighting,
+            props.photo
+          )}>
           <Icon type="Light" width="25px" />
         </button>
       </div>
     </div>
   );
 };
-plantBadge.defaultProps = {
+
+plantCard.defaultProps = {
   width: '140px',
   height: '140px',
 };
 
-plantBadge.propTypes = {
+// plantCard.propTypes = {};
 
-}
-
-export default plantBadge;
+export default plantCard;

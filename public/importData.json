@@ -4,17 +4,17 @@
   "species": "Mentha x Piperita",
   "photo" : "https://cdn.shopify.com/s/files/1/0022/5338/9887/products/Mint_in_a_clay_pot_800x.jpg?v=1536872571",
   "watering": "when soil feels dry mint",
-  "lighting" : "loves direct sunlight",
-  "edible":"yes"
+  "lighting" : "loves direct sunlight mint",
+  "edible":"yes mint"
 },
 {
   "id": "0002",
   "name": "Becky",
   "species": "Laurus nobilis",
-  "photo": "https://media.gettyimages.com/photos/small-laurel-tree-in-flower-pot-isolated-on-white-background-closeup-picture-id1040549464?s=2048x2048",
+  "photo": "https://thumbs.dreamstime.com/z/de-installatie-van-de-laurier-pot-4713104.jpg",
   "watering": "when soil feels dry laurel",
-  "lighting" : "loves direct sunlight",
-  "edible":"yes"
+  "lighting" : "loves direct sunlight laurel",
+  "edible":"yes laurel"
 },
 {
   "id": "0003",
@@ -22,32 +22,136 @@
   "species": "Ocimum basilicum",
   "photo": "https://cdn.shopify.com/s/files/1/0064/0604/5807/products/Basil_plant_in_terracotta_pot_800x.jpg?v=1539785082",
   "watering": "when soil feels dry basil",
-  "lighting" : "loves direct sunlight",
-  "edible":"yes"
+  "lighting" : "loves direct sunlight basil",
+  "edible":"yes basil"
 },
 {
   "id": "0004",
-  "name": "Meg",
+  "name": "Menthy",
   "species": "Origanum vulgare",
   "photo" : "https://cdn.shopify.com/s/files/1/0022/5338/9887/products/Oregano_in_a_clay_pot_2000x.jpg?v=1536872565",
   "watering": "when soil feels dry oregano",
-  "lighting" : "loves direct sunlight",
-  "edible":"yes"
+  "lighting" : "loves direct sunlight oregano",
+  "edible":"yes oregano"
 },
 {"id": "005",
   "name": "Bubu",
   "species": "Ficus Benjamina",
   "photo": "https://www.exotenherz.de/media/image/product/2012/lg/bushy-weeping-fig-ficus-benjamini-kinky-white-foliage-12cm-pot.jpg",
   "watering": "when soil feels dry ficus",
-  "lighting" : "loves direct sunlight",
-  "edible":"no"
+  "lighting" : "loves direct sunlight ficus",
+  "edible":"no ficus"
   },
 {"id": "006",
   "name": "Snickets",
   "species": "Citrus X Limon",
   "photo": "https://previews.123rf.com/images/jojjik/jojjik1204/jojjik120400744/13389734-small-citrus-tree-in-the-pot-isolated-on-white.jpg",
   "watering": "when soil feels dry lemon",
-  "lighting" : "loves direct sunlight",
-  "edible":"no"
-  }]
+  "lighting" : "loves direct sunlight lemon",
+  "edible":"no lemon"
+  },
+  {
+    "id": "0007",
+    "name": "Ryan",
+    "species": "Mentha x Piperita",
+    "photo" : "https://cdn.shopify.com/s/files/1/0022/5338/9887/products/Mint_in_a_clay_pot_800x.jpg?v=1536872571",
+    "watering": "when soil feels dry mint",
+    "lighting" : "loves direct sunlight mint",
+    "edible":"yes mint"
+  },
+  {
+    "id": "0008",
+    "name": "Becky",
+    "species": "Laurus nobilis",
+    "photo": "https://thumbs.dreamstime.com/z/de-installatie-van-de-laurier-pot-4713104.jpg",
+    "watering": "when soil feels dry laurel",
+    "lighting" : "loves direct sunlight laurel",
+    "edible":"yes laurel"
+  },
+  {
+    "id": "0009",
+    "name": "Tina",
+    "species": "Ocimum basilicum",
+    "photo": "https://cdn.shopify.com/s/files/1/0064/0604/5807/products/Basil_plant_in_terracotta_pot_800x.jpg?v=1539785082",
+    "watering": "when soil feels dry basil",
+    "lighting" : "loves direct sunlight basil",
+    "edible":"yes basil"
+  },
+  {
+    "id": "0010",
+    "name": "Menthy",
+    "species": "Origanum vulgare",
+    "photo" : "https://cdn.shopify.com/s/files/1/0022/5338/9887/products/Oregano_in_a_clay_pot_2000x.jpg?v=1536872565",
+    "watering": "when soil feels dry oregano",
+    "lighting" : "loves direct sunlight oregano",
+    "edible":"yes oregano"
+  },
+  {"id": "0011",
+    "name": "Bubu",
+    "species": "Ficus Benjamina",
+    "photo": "https://www.exotenherz.de/media/image/product/2012/lg/bushy-weeping-fig-ficus-benjamini-kinky-white-foliage-12cm-pot.jpg",
+    "watering": "when soil feels dry ficus",
+    "lighting" : "loves direct sunlight ficus",
+    "edible":"no ficus"
+    },
+  {"id": "0012",
+    "name": "Snickets",
+    "species": "Citrus X Limon",
+    "photo": "https://previews.123rf.com/images/jojjik/jojjik1204/jojjik120400744/13389734-small-citrus-tree-in-the-pot-isolated-on-white.jpg",
+    "watering": "when soil feels dry lemon",
+    "lighting" : "loves direct sunlight lemon",
+    "edible":"no lemon"
+    },
+    {
+      "id": "00013",
+      "name": "Ryan",
+      "species": "Mentha x Piperita",
+      "photo" : "https://cdn.shopify.com/s/files/1/0022/5338/9887/products/Mint_in_a_clay_pot_800x.jpg?v=1536872571",
+      "watering": "when soil feels dry mint",
+      "lighting" : "loves direct sunlight mint",
+      "edible":"yes mint"
+    },
+    {
+      "id": "00014",
+      "name": "Becky",
+      "species": "Laurus nobilis",
+      "photo": "https://thumbs.dreamstime.com/z/de-installatie-van-de-laurier-pot-4713104.jpg",
+      "watering": "when soil feels dry laurel",
+      "lighting" : "loves direct sunlight laurel",
+      "edible":"yes laurel"
+    },
+    {
+      "id": "00015",
+      "name": "Tina",
+      "species": "Ocimum basilicum",
+      "photo": "https://cdn.shopify.com/s/files/1/0064/0604/5807/products/Basil_plant_in_terracotta_pot_800x.jpg?v=1539785082",
+      "watering": "when soil feels dry basil",
+      "lighting" : "loves direct sunlight basil",
+      "edible":"yes basil"
+    },
+    {
+      "id": "00016",
+      "name": "Menthy",
+      "species": "Origanum vulgare",
+      "photo" : "https://cdn.shopify.com/s/files/1/0022/5338/9887/products/Oregano_in_a_clay_pot_2000x.jpg?v=1536872565",
+      "watering": "when soil feels dry oregano",
+      "lighting" : "loves direct sunlight oregano",
+      "edible":"yes oregano"
+    },
+    {"id": "0017",
+      "name": "Bubu",
+      "species": "Ficus Benjamina",
+      "photo": "https://www.exotenherz.de/media/image/product/2012/lg/bushy-weeping-fig-ficus-benjamini-kinky-white-foliage-12cm-pot.jpg",
+      "watering": "when soil feels dry ficus",
+      "lighting" : "loves direct sunlight ficus",
+      "edible":"no ficus"
+      },
+    {"id": "0018",
+      "name": "Snickets",
+      "species": "Citrus X Limon",
+      "photo": "https://previews.123rf.com/images/jojjik/jojjik1204/jojjik120400744/13389734-small-citrus-tree-in-the-pot-isolated-on-white.jpg",
+      "watering": "when soil feels dry lemon",
+      "lighting" : "loves direct sunlight lemon",
+      "edible":"no lemon"
+      }]
 }

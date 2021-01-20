@@ -3,36 +3,58 @@ import PropTypes from 'prop-types';
 import styles from './Main.module.scss';
 import Header from '../Header/Header';
 import SearchField from '../SearchField/SearchField';
-import PlantBadge from '../PlantBadges/PlantBadge';
-import Modal from '../UI/Modal/Modal';
+import PlantCard from '../PlantCards/PlantCard';
 import Button from '../../controls/Button/SearchButton/Button';
-// import Form from '../AddForm/AddForm';
+import Spinner from '../UI/Spinner/Spinner';
+import Modal from '../UI/Modal/Modal';
+import PlantInfoCard from '../PlantInfoCard/PlantInfoCard';
+import Icon from '../../controls/Icons/Icons';
+import AddPlantForm from '../AddPlantForm/AddPlantForm';
+import { Route, Link, Switch } from 'react-router-dom';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       plants: [],
       query: '',
       selectedPlants: [],
-      isFetchingData: null,
+      isFetchingData: true,
       isActive: null,
       show: false,
-      requiredInfo: '',
+      requestedInfo: '',
     };
   }
-
+  // set state from external source
   componentDidMount() {
     fetch('./importData.json')
       .then((response) => response.json())
       .then((response) => {
-        const responseData = response.plants;
-        this.setState({ plants: responseData });
+        const plants = [];
+        for (let plant of response.plants) {
+          plants.push({
+            id: plant.id,
+            name: plant.name,
+            photo:
+              plant.photo ||
+              'https://images.all-free-download.com/images/graphiclarge/orchid_pot_drawing_3d_retro_design_6833722.jpg',
+            water: plant.watering,
+            light: plant.lighting,
+            edible: plant.edible,
+            species: plant.species,
+          });
+        }
+
+        this.setState({
+          plants: plants,
+          isFetchingData: false,
+        });
       })
       .catch((error) => console.log('Error', error));
   }
-  // search method - check whether obj[key] is undefined
-  // check whether keys param is valid
+
+  // search method - condens search parameters
   search = (obj, keys, query) => {
     if (!keys || keys.length === 0) {
       return false;
@@ -45,74 +67,115 @@ class Main extends React.Component {
     });
   };
 
-  handleQuery = (value) => {
-    // handle return case b4 logic
+  // handle search bar inputs below
+  handleSearchBarInput = (value) => {
     if (value.length < 3) {
+      this.setState({ query: value });
       return;
     }
-    const plants = { ...this.state.plants };
+    const plants = [...this.state.plants];
 
     const searchedPlants = plants.filter((plant) =>
       this.search(plant, ['name', 'species'], value)
     );
-    // apply same further down
     this.setState({
       ...this.state,
       query: value,
       selectedPlants: searchedPlants,
     });
   };
-
+  // toggle modal visibility below
   toggleModal = () => {
     this.setState({ show: !this.state.show });
-    console.log('clicked!');
   };
 
-  requirePlantInfo = (info, id) => {
-    this.setState({ show: true });
-    console.log(info, id, 'clicked!');
+  // handle buttons for watering, lighting and edibility below
+  handlePlantRequirement = (careType, careInfo, photo) => {
+    this.toggleModal();
+    if (!careType || !careInfo) {
+      return;
+    }
+    const modalInfo = { careType, careInfo, photo };
+    this.setState({ requestedInfo: modalInfo });
   };
 
-  handleButtonClick = (action, plant) => {
-    console.log({ action, plant });
-  };
   render() {
-    const { plants, selectedPlants } = this.state;
-    const plantsQuerried = Object.keys(
-      selectedPlants
-    ).map((plant) => (
-      <PlantBadge {...selectedPlants[plant]} key={plant.id} />
-    ));
-    const plantsRendered = Object.keys(plants).map((plant) => (
-      <PlantBadge
-        {...plants[plant]}
+    const {
+      plants,
+      selectedPlants,
+      isFetchingData,
+      query,
+      requestedInfo,
+    } = this.state;
+
+    const plantsRendered = plants.map((plant) => (
+      <PlantCard
+        name={plant.name}
+        species={plant.species}
+        photo={plant.photo}
         key={plant.id}
-        ButtonClicked={this.handleButtonClick}
+        watering={plant.water}
+        edible={plant.edible}
+        lighting={plant.light}
+        handleButtonClick={this.handlePlantRequirement}
       />
     ));
+
+    const plantsQuerried = selectedPlants.map((plant) => (
+      <PlantCard
+        name={plant.name}
+        species={plant.species}
+        photo={plant.photo}
+        key={plant.id}
+        watering={plant.water}
+        edible={plant.edible}
+        lighting={plant.light}
+        handleButtonClick={this.handlePlantRequirement}
+      />
+    ));
+
+    const mainPlantsRender = isFetchingData ? (
+      <div>
+        <Spinner />
+      </div>
+    ) : query.length > 2 ? (
+      <div className={styles.plantsQuerried}>{plantsQuerried}</div>
+    ) : (
+      <div className={styles.plantsRendered}>{plantsRendered}</div>
+    );
+
+    const modalInfo = (
+      <PlantInfoCard
+        heading={requestedInfo.careType}
+        info={requestedInfo.careInfo}
+        photo={requestedInfo.photo}
+      />
+    );
+
     return (
-      // implement modal with information bubble - clicked icon reveals info behind it
-
-      <div className={styles.Main}>
+      <div>
         <Header />
-        <div className={styles.SearchField}>
-          <SearchField onChange={this.handleQuery} />
-          <Button>+</Button>
-        </div>
-        {/* <Form /> */}
 
-        <Modal
-          show={this.state.show}
-          clicked={this.toggleModal}></Modal>
-        {this.state.query.length >= 3 ? (
-          <div className={styles.plantsQuerried}>
-            {plantsQuerried}
+        <Route path="/" exact>
+          <div className={styles.Main}>
+            <div className={styles.SearchField}>
+              <SearchField onChange={this.handleSearchBarInput} />
+              <Link to="/addPlantForm">
+                <Button>
+                  <Icon type="Add" width="23px" />
+                </Button>
+              </Link>
+            </div>
+            <Modal show={this.state.show} clicked={this.toggleModal}>
+              {modalInfo}
+            </Modal>
+            {mainPlantsRender}
           </div>
-        ) : (
-          <div className={styles.plantsRendered}>
-            {plantsRendered}
-          </div>
-        )}
+        </Route>
+
+        <Route path="/addPlantForm">
+          <AddPlantForm />
+        </Route>
       </div>
     );
   }

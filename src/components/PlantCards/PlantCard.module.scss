@@ -17,7 +17,7 @@ $pink-shadow: #ffe3e2;
 .plantCardContainer {
   height: 250px;
   width: 162px;
-  background-color: rgba(0, 0, 0, 0.004);
+  background-color: #fff;
   text-align: center;
   margin: 10px;
   border-radius: 4px;
@@ -34,6 +34,10 @@ $pink-shadow: #ffe3e2;
     0 10px 15px 0 rgba(126, 126, 126, 0.12),
     0 -2px 6px 1px rgba(199, 199, 199, 0.55) inset,
     0 2px 4px 2px rgba(255, 255, 255, 0.83) inset;
+
+  img {
+    border-radius: 5px;
+  }
 
   .plantCardName {
     margin-top: 8px;
@@ -61,9 +65,8 @@ $pink-shadow: #ffe3e2;
   align-items: center;
   width: 44px;
   height: 42px;
-  background: #f3f0f1;
   position: relative;
-  background: #f3f0f1;
+  background: #f0f0f3;
   margin-top: 8px;
   border-radius: 8px;
   text-align: center;

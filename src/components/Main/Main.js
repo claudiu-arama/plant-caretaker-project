@@ -11,6 +11,7 @@ import PlantInfoCard from '../PlantInfoCard/PlantInfoCard';
 import Icon from '../../controls/Icons/Icons';
 import AddPlantForm from '../AddPlantForm/AddPlantForm';
 import { Route, Link, Switch } from 'react-router-dom';
+import spinner from '../UI/Spinner/Spinner';
 
 class Main extends React.Component {
   constructor(props) {
@@ -121,18 +122,22 @@ class Main extends React.Component {
       />
     ));
 
-    const plantsQuerried = selectedPlants.map((plant) => (
-      <PlantCard
-        name={plant.name}
-        species={plant.species}
-        photo={plant.photo}
-        key={plant.id}
-        watering={plant.water}
-        edible={plant.edible}
-        lighting={plant.light}
-        handleButtonClick={this.handlePlantRequirement}
-      />
-    ));
+    const plantsQuerried = !selectedPlants.length ? (
+      <Spinner />
+    ) : (
+      selectedPlants.map((plant) => (
+        <PlantCard
+          name={plant.name}
+          species={plant.species}
+          photo={plant.photo}
+          key={plant.id}
+          watering={plant.water}
+          edible={plant.edible}
+          lighting={plant.light}
+          handleButtonClick={this.handlePlantRequirement}
+        />
+      ))
+    );
 
     const mainPlantsRender = isFetchingData ? (
       <div>
@@ -173,9 +178,7 @@ class Main extends React.Component {
           </div>
         </Route>
 
-        <Route path="/addPlantForm">
-          <AddPlantForm />
-        </Route>
+        <Route path="/addPlantForm" component={AddPlantForm} />
       </div>
     );
   }

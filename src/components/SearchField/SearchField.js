@@ -2,29 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './SearchField.module.scss';
 import TextField from '../TextField/TextField';
-import Button from '../../controls/Button/SearchButton/Button';
-import Icon from '../../controls/Icons/Icons';
+import Button from '../../controls/Button/Button';
 
 class SearchField extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div className={styles.SearchField}>
         <TextField
           placeholder="check up on your plants"
-          {...this.props}
+          onChange={this.props.onChange}
         />
-        {/* add buttons for edit and add plants with forms for adding and editing the selected plants */}
-        <Button type="search"></Button>
+        <Button type="Search"></Button>
       </div>
     );
   }
 }
 
-SearchField.propTypes = {};
-
-SearchField.defaultProps = {};
+SearchField.propTypes = {
+  onChange: PropTypes.func,
+};
 
 export default SearchField;

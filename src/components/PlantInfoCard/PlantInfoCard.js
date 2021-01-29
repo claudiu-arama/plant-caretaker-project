@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './PlantInfoCard.module.scss';
-import Icon from '../../controls/Icons/Icons';
 
 const plantInfoCard = (props) => {
   return (

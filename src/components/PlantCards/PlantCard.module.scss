@@ -15,13 +15,14 @@ $pink-shadow: #ffe3e2;
 }
 
 .plantCardContainer {
+  cursor: pointer;
   height: 250px;
   width: 162px;
   background-color: #fff;
   text-align: center;
   margin: 10px;
   border-radius: 4px;
-  border: 1px solid rgb(245, 238, 238);
+  // border: 1px solid rgb(245, 238, 238);
   -webkit-box-shadow: 0 2px 4px 0 rgba(72, 72, 72, 0.83),
     0 10px 15px 0 rgba(126, 126, 126, 0.12),
     0 -2px 6px 1px rgba(199, 199, 199, 0.55) inset,
@@ -90,5 +91,12 @@ $pink-shadow: #ffe3e2;
     box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.5),
       inset 8px 8px 16px rgba(0, 0, 0, 0.1);
     color: #79e3b6;
+  }
+}
+
+.LinkContainer {
+  a {
+    text-decoration: none;
+    color: #000;
   }
 }

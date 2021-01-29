@@ -1,4 +1,6 @@
 .Header {
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   min-height: 24px;
@@ -6,6 +8,11 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.03);
   background-color: #fff;
   z-index: 1;
+
+  // .Logo {
+  //   position: sticky;
+  //   top: 0;
+  // }
 
   .AppHeader {
     font-size: 12px;

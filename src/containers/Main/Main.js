@@ -1,17 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import styles from './Main.module.scss';
 import Header from '../Header/Header';
-import SearchField from '../SearchField/SearchField';
-import PlantCard from '../PlantCards/PlantCard';
-import Button from '../../controls/Button/SearchButton/Button';
-import Spinner from '../UI/Spinner/Spinner';
-import Modal from '../UI/Modal/Modal';
-import PlantInfoCard from '../PlantInfoCard/PlantInfoCard';
+import SearchField from '../../components/SearchField/SearchField';
+import PlantCard from '../../components/PlantCards/PlantCard';
+import Button from '../../controls/Button/Button';
+import Spinner from '../../UI/Spinner/Spinner';
+import Modal from '../../UI/Modal/Modal';
+import PlantInfoCard from '../../components/PlantInfoCard/PlantInfoCard';
 import Icon from '../../controls/Icons/Icons';
-import AddPlantForm from '../AddPlantForm/AddPlantForm';
-import { Route, Link, Switch } from 'react-router-dom';
-import spinner from '../UI/Spinner/Spinner';
+import AddPlantForm from '../Forms/AddPlantForm/AddPlantForm';
+import { Route, Link, Switch, withRouter } from 'react-router-dom';
+import BurgerMenu from '../../components/BurgerMenu/BurgerMenu';
+import PlantPage from '../../components/PlantPage/PlantPage';
 
 class Main extends React.Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class Main extends React.Component {
       isActive: null,
       show: false,
       requestedInfo: '',
+      menuOpen: false,
     };
   }
   // set state from external source
@@ -90,6 +92,32 @@ class Main extends React.Component {
     this.setState({ show: !this.state.show });
   };
 
+  toggleBurgerMenu = () => {
+    this.setState({ menuOpen: !this.state.menuOpen });
+  };
+
+  // access plant page below
+  // ****************************************** is this ok?
+  // ***************************************** do i pass props through params?
+  AccesPlantPage = (id) => {
+    const queryParams = [];
+    // *****************************does this work?
+    const plant = this.state.plants.find((elem) => elem.id === id);
+
+    for (const [key, value] of Object.entries(plant)) {
+      queryParams.push(
+        encodeURIComponent(key) + '=' + encodeURIComponent(value)
+      );
+    }
+    const queryString = queryParams.join('&');
+    this.props.history.push({
+      // ******************is this ok?
+
+      pathname: '/p/',
+      search: '?' + queryString,
+    });
+  };
+
   // handle buttons for watering, lighting and edibility below
   handlePlantRequirement = (careType, careInfo, photo) => {
     this.toggleModal();
@@ -115,10 +143,12 @@ class Main extends React.Component {
         species={plant.species}
         photo={plant.photo}
         key={plant.id}
+        item={plant.id}
         watering={plant.water}
         edible={plant.edible}
         lighting={plant.light}
         handleButtonClick={this.handlePlantRequirement}
+        plantAccessed={() => this.AccesPlantPage(plant.id)}
       />
     ));
 
@@ -135,6 +165,7 @@ class Main extends React.Component {
           edible={plant.edible}
           lighting={plant.light}
           handleButtonClick={this.handlePlantRequirement}
+          plantAccessed={() => this.AccesPlantPage(plant.id)}
         />
       ))
     );
@@ -159,33 +190,48 @@ class Main extends React.Component {
 
     return (
       <div>
-        <Header />
+        <Header toggleBurgerMenu={this.toggleBurgerMenu} />
+        <BurgerMenu isOpen={this.state.menuOpen} />
+        <main>
+          <Switch>
+            <Route path="/" exact>
+              <div className={styles.Main}>
+                <div className={styles.SearchField}>
+                  <SearchField onChange={this.handleSearchBarInput} />
+                  {/* ************************************************is this ok? (using Link here and method higher?) */}
 
-        <Route path="/" exact>
-          <div className={styles.Main}>
-            <div className={styles.SearchField}>
-              <SearchField onChange={this.handleSearchBarInput} />
-              <Link to="/addPlantForm">
-                <Button>
-                  <Icon type="Add" width="23px" />
-                </Button>
-              </Link>
-            </div>
-            <Modal show={this.state.show} clicked={this.toggleModal}>
-              {modalInfo}
-            </Modal>
-            {mainPlantsRender}
-          </div>
-        </Route>
+                  <Link to="/addPlantForm">
+                    <Button type="Add">
+                      <Icon type="Add" width="23px" />
+                    </Button>
+                  </Link>
+                </div>
 
-        <Route path="/addPlantForm" component={AddPlantForm} />
+                <Modal
+                  show={this.state.show}
+                  clicked={this.toggleModal}>
+                  {modalInfo}
+                </Modal>
+
+                {mainPlantsRender}
+              </div>
+            </Route>
+
+            <Route path="/addPlantForm" component={AddPlantForm} />
+            {/* ****************************pass props to component in Route */}
+            <Route
+              path={this.props.match.url + ':id'}
+              render={(props) => <PlantPage {...props} />}
+            />
+          </Switch>
+        </main>
       </div>
     );
   }
 }
 
-Main.propTypes = {};
+// Main.propTypes = {};
 
-Main.defaultProps = {};
+// Main.defaultProps = {};
 
-export default Main;
+export default withRouter(Main);

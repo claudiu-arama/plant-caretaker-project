@@ -26,7 +26,6 @@ class AddPlantForm extends React.Component {
     const target = event.target;
     const plantPhoto = target.files[0];
     const name = target.name;
-    console.log(event);
 
     this.setState({ [name]: plantPhoto });
   };
@@ -37,7 +36,8 @@ class AddPlantForm extends React.Component {
 
   handleSubmitButton = (event) => {
     event.preventDefault();
-    console.log(this.state);
+
+    this.props.history.push('/');
   };
 
   render() {
@@ -45,6 +45,9 @@ class AddPlantForm extends React.Component {
       <div className={styles.AddPlantFormBody}>
         <div className={styles.AddPlantFormContent}>
           <form action="submit">
+            <p className={styles.AddPlantFormPara}>
+              Add a plant to your collection!
+            </p>
             <label className={styles.AddPlantFormLabel}>
               Plant Name:
               <input

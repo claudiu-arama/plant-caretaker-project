@@ -13,7 +13,7 @@ const icon = (props) => {
     Logo: {
       src: PlantLogo,
       style: styles.LogoContainer,
-      alt: 'THe Logo',
+      alt: 'The Logo',
     },
     Menu: {
       src: BurgerMenu,

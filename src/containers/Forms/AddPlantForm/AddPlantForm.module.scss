@@ -1,7 +1,7 @@
 .AddPlantFormBody {
   &::after {
     content: '';
-    background-image: url('../../assets/AddPlantFormBackground.jpeg');
+    background-image: url('../../../assets/AddPlantFormBackground.jpeg');
     background-position: -200px 0px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -123,4 +123,9 @@ input[type='text']:focus {
 .AddPlantFormButtonsControl {
   display: flex;
   justify-content: space-evenly;
+}
+
+.AddPlantFormPara {
+  text-align: center;
+  margin-bottom: 50px;
 }

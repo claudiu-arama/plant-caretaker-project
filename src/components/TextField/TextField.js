@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './TextField.module.scss';
-import Icon from '../../controls/Icons/Icons';
 
 class TextField extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleInputChange = (event) => {
     const target = event.target;
     const value = target.value;
@@ -15,7 +10,7 @@ class TextField extends React.Component {
   };
 
   render() {
-    const { defaultValue, placeholder, onClick } = this.props;
+    const { defaultValue, placeholder } = this.props;
 
     return (
       <div className={styles.TextField}>
@@ -33,8 +28,6 @@ class TextField extends React.Component {
     );
   }
 }
-
-<form class="searchbox"></form>;
 
 TextField.propTypes = {
   onChange: PropTypes.func,

@@ -1,10 +1,23 @@
 import React from 'react';
 
 class PlantPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  // fetch from file and filter all plants by ID ***************** toDo!
   render() {
+    const {
+      photo,
+      name,
+      species,
+      watering,
+      lighting,
+      edible,
+    } = this.props.location.info;
     return (
       <div>
-        <img src={this.props.photo} alt="" />
+        <img src={photo} alt="" />
         <p>Hello! you are here!</p>
         <p>{this.props.item}</p>
       </div>

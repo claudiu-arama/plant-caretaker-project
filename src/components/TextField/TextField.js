@@ -7,6 +7,7 @@ class TextField extends React.Component {
     const target = event.target;
     const value = target.value;
     this.props.onChange(value);
+    // pass onchange from main, as props, here
   };
 
   render() {

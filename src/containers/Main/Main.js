@@ -9,7 +9,7 @@ import Spinner from '../../UI/Spinner/Spinner';
 import Modal from '../../UI/Modal/Modal';
 import PlantInfoCard from '../../components/PlantInfoCard/PlantInfoCard';
 import Icon from '../../controls/Icons/Icons';
-import AddPlantForm from '../Forms/AddPlantForm/AddPlantForm';
+import AddPlantForm from '../../components/Forms/AddPlantForm/AddPlantForm';
 import { Route, Link, Switch, withRouter } from 'react-router-dom';
 import BurgerMenu from '../../components/BurgerMenu/BurgerMenu';
 import PlantPage from '../../components/PlantPage/PlantPage';
@@ -97,24 +97,11 @@ class Main extends React.Component {
   };
 
   // access plant page below
-  // ****************************************** is this ok?
-  // ***************************************** do i pass props through params?
   AccesPlantPage = (id) => {
-    const queryParams = [];
-    // *****************************does this work?
-    const plant = this.state.plants.find((elem) => elem.id === id);
-
-    for (const [key, value] of Object.entries(plant)) {
-      queryParams.push(
-        encodeURIComponent(key) + '=' + encodeURIComponent(value)
-      );
-    }
-    const queryString = queryParams.join('&');
+    const myPlant = this.state.plants.find((elem) => elem.id === id);
     this.props.history.push({
-      // ******************is this ok?
-
-      pathname: '/p/',
-      search: '?' + queryString,
+      pathname: '/p/' + myPlant.id,
+      info: myPlant,
     });
   };
 
@@ -198,7 +185,6 @@ class Main extends React.Component {
               <div className={styles.Main}>
                 <div className={styles.SearchField}>
                   <SearchField onChange={this.handleSearchBarInput} />
-                  {/* ************************************************is this ok? (using Link here and method higher?) */}
 
                   <Link to="/addPlantForm">
                     <Button type="Add">
@@ -218,7 +204,6 @@ class Main extends React.Component {
             </Route>
 
             <Route path="/addPlantForm" component={AddPlantForm} />
-            {/* ****************************pass props to component in Route */}
             <Route
               path={this.props.match.url + ':id'}
               render={(props) => <PlantPage {...props} />}
@@ -229,9 +214,5 @@ class Main extends React.Component {
     );
   }
 }
-
-// Main.propTypes = {};
-
-// Main.defaultProps = {};
 
 export default withRouter(Main);

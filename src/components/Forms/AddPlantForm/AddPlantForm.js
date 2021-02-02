@@ -28,6 +28,7 @@ class AddPlantForm extends React.Component {
     const name = target.name;
 
     this.setState({ [name]: plantPhoto });
+    console.log(this.state);
   };
 
   handleCancelButton = () => {
@@ -36,7 +37,7 @@ class AddPlantForm extends React.Component {
 
   handleSubmitButton = (event) => {
     event.preventDefault();
-
+    console.log(this.state);
     this.props.history.push('/');
   };
 

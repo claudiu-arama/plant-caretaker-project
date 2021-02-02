@@ -31,21 +31,24 @@ class Main extends React.Component {
   }
   // set state from external source
   componentDidMount() {
-    fetch('./importData.json')
+    fetch(
+      'https://plantcaretaker-3606a-default-rtdb.europe-west1.firebasedatabase.app/plants.json'
+    )
       .then((response) => response.json())
       .then((response) => {
         const plants = [];
-        for (let plant of response.plants) {
+
+        for (let plant in response) {
           plants.push({
-            id: plant.id,
-            name: plant.name,
+            id: response[plant].id,
+            name: response[plant].name,
             photo:
-              plant.photo ||
+              response[plant].photo ||
               'https://images.all-free-download.com/images/graphiclarge/orchid_pot_drawing_3d_retro_design_6833722.jpg',
-            water: plant.watering,
-            light: plant.lighting,
-            edible: plant.edible,
-            species: plant.species,
+            water: response[plant].watering,
+            light: response[plant].lighting,
+            edible: response[plant].edible,
+            species: response[plant].species,
           });
         }
 

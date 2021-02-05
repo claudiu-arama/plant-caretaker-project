@@ -13,6 +13,8 @@ import AddPlantForm from '../../components/Forms/AddPlantForm/AddPlantForm';
 import { Route, Link, Switch, withRouter } from 'react-router-dom';
 import BurgerMenu from '../../components/BurgerMenu/BurgerMenu';
 import PlantPage from '../../components/PlantPage/PlantPage';
+import moment from 'moment';
+import plantInfoCard from '../../components/PlantInfoCard/PlantInfoCard';
 
 class Main extends React.Component {
   constructor(props) {
@@ -23,7 +25,7 @@ class Main extends React.Component {
       query: '',
       selectedPlants: [],
       isFetchingData: true,
-      isActive: null,
+      needsWatering: null,
       show: false,
       requestedInfo: '',
       menuOpen: false,
@@ -37,19 +39,29 @@ class Main extends React.Component {
       .then((response) => response.json())
       .then((response) => {
         const plants = [];
-
-        for (let plant in response) {
+        for (let plantID in response) {
+          const plant = response[plantID];
           plants.push({
-            id: response[plant].id,
-            name: response[plant].name,
+            id: plant.id,
+            name: plant.name,
             photo:
-              response[plant].photo ||
+              plant.photo ||
               'https://images.all-free-download.com/images/graphiclarge/orchid_pot_drawing_3d_retro_design_6833722.jpg',
-            water: response[plant].watering,
-            light: response[plant].lighting,
-            edible: response[plant].edible,
-            species: response[plant].species,
+            water: plant.watering,
+            light: plant.lighting,
+            edible: plant.edible,
+            species: plant.species,
+            waterInterval: plant.waterInterval || '72 hrs',
+            // extra state, not needed for now
+            needsWatering: plant.needsWatering,
           });
+
+          localStorage.setItem(
+            plant.id,
+            plant.waterInterval
+            // plant.name,
+            // plant.needsWatering
+          );
         }
 
         this.setState({
@@ -108,7 +120,7 @@ class Main extends React.Component {
     });
   };
 
-  // handle buttons for watering, lighting and edibility below
+  // handle buttons for watering, lighting and edibility info below
   handlePlantRequirement = (careType, careInfo, photo) => {
     this.toggleModal();
     if (!careType || !careInfo) {
@@ -118,6 +130,44 @@ class Main extends React.Component {
     this.setState({ requestedInfo: modalInfo });
   };
 
+  //handle button for marking the watering of a plant
+  handlePlantWateringButton = (plantID, plantName) => {
+    if (!plantID || !plantName) {
+      return;
+    }
+
+    const plant = this.state.plants.find(
+      (elem) => elem.id === plantID
+    );
+
+    const plantNeedsWater = plant.needsWatering;
+    if (!plantNeedsWater) {
+      return;
+    }
+
+    const wateredPlant = plant.waterInterval;
+
+    // let timeInterval = wateredPlant;
+    let timeInterval = localStorage.getItem(plantID);
+
+    if (!timeInterval) {
+      return;
+    }
+
+    this.tickDown = () => {
+      timeInterval = timeInterval - 1;
+      if (timeInterval === 0) {
+        clearInterval(intervalId);
+        localStorage.setItem(plantID, wateredPlant);
+
+        return;
+      }
+      localStorage.setItem(plantID, timeInterval);
+    };
+
+    let intervalId = setInterval(this.tickDown, 100);
+  };
+
   render() {
     const {
       plants,
@@ -125,6 +175,7 @@ class Main extends React.Component {
       isFetchingData,
       query,
       requestedInfo,
+      needsWatering,
     } = this.state;
 
     const plantsRendered = plants.map((plant) => (
@@ -137,8 +188,10 @@ class Main extends React.Component {
         watering={plant.water}
         edible={plant.edible}
         lighting={plant.light}
+        waterInterval={plant.waterInterval}
         handleButtonClick={this.handlePlantRequirement}
         plantAccessed={() => this.AccesPlantPage(plant.id)}
+        handlePlantWatering={this.handlePlantWateringButton}
       />
     ));
 
@@ -151,11 +204,14 @@ class Main extends React.Component {
           species={plant.species}
           photo={plant.photo}
           key={plant.id}
+          item={plant.id}
           watering={plant.water}
           edible={plant.edible}
           lighting={plant.light}
+          waterInterval={plant.waterInterval}
           handleButtonClick={this.handlePlantRequirement}
           plantAccessed={() => this.AccesPlantPage(plant.id)}
+          handlePlantWatering={this.handlePlantWateringButton}
         />
       ))
     );

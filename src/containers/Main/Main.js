@@ -25,7 +25,9 @@ class Main extends React.Component {
       query: '',
       selectedPlants: [],
       isFetchingData: true,
-      show: false,
+      showPlantInfoModal: false,
+      showPlantWateringModal: false,
+      wateredPlant: [],
       requestedInfo: '',
       menuOpen: false,
     };
@@ -98,8 +100,10 @@ class Main extends React.Component {
     });
   };
   // toggle modal visibility below
-  toggleModal = () => {
-    this.setState({ show: !this.state.show });
+  togglePlantInfoModal = () => {
+    this.setState({
+      showPlantInfoModal: !this.state.showPlantInfoModal,
+    });
   };
 
   toggleBurgerMenu = () => {
@@ -117,7 +121,7 @@ class Main extends React.Component {
 
   // handle buttons for watering, lighting and edibility info below
   handlePlantRequirement = (careType, careInfo, photo) => {
-    this.toggleModal();
+    this.togglePlantInfoModal();
     if (!careType || !careInfo) {
       return;
     }
@@ -134,9 +138,6 @@ class Main extends React.Component {
     const plant = this.state.plants.find(
       (elem) => elem.id === plantID
     );
-    const waterInterval = plant.waterInterval;
-
-    // const clonedPlant = { ...plant, needsWatering: false };
 
     this.setState((prevState) => {
       const updatedPlants = prevState.plants.map((plant) => {
@@ -145,8 +146,14 @@ class Main extends React.Component {
         }
         return plant;
       });
-      return { plants: updatedPlants };
+      return {
+        plants: updatedPlants,
+        wateredPlant: plant,
+        showPlantWateringModal: true,
+      };
     });
+
+    const waterInterval = plant.waterInterval;
 
     const timeToNextWatering = moment()
       .add(waterInterval.num, waterInterval.time)
@@ -155,7 +162,6 @@ class Main extends React.Component {
 
     const wateringInterval = setInterval(() => {
       let currentTime = moment().utc().format();
-      console.log({ currentTime, timeToNextWatering });
       if (currentTime === timeToNextWatering) {
         clearInterval(wateringInterval);
         this.setState((prevState) => {
@@ -173,6 +179,12 @@ class Main extends React.Component {
     }, 1000);
   };
 
+  togglePlantWateringModal = () => {
+    this.setState({
+      showPlantWateringModal: !this.state.showPlantWateringModal,
+    });
+  };
+
   render() {
     const {
       plants,
@@ -180,7 +192,9 @@ class Main extends React.Component {
       isFetchingData,
       query,
       requestedInfo,
-      needsWatering,
+      wateredPlant,
+      showPlantInfoModal,
+      showPlantWateringModal,
     } = this.state;
 
     const plantsRendered = plants.map((plant) => (
@@ -239,6 +253,14 @@ class Main extends React.Component {
       />
     );
 
+    const wateredPlantInformation = (
+      <PlantInfoCard
+        // heading={wateredPlant.name}
+        info={wateredPlant.species}
+        photo={wateredPlant.photo}
+      />
+    );
+
     return (
       <div>
         <Header toggleBurgerMenu={this.toggleBurgerMenu} />
@@ -258,9 +280,14 @@ class Main extends React.Component {
                 </div>
 
                 <Modal
-                  show={this.state.show}
-                  clicked={this.toggleModal}>
+                  show={showPlantInfoModal}
+                  clicked={this.togglePlantInfoModal}>
                   {modalInfo}
+                </Modal>
+                <Modal
+                  show={showPlantWateringModal}
+                  clicked={this.togglePlantWateringModal}>
+                  {wateredPlantInformation}
                 </Modal>
 
                 {mainPlantsRender}

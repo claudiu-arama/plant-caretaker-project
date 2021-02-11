@@ -25,7 +25,6 @@ class Main extends React.Component {
       query: '',
       selectedPlants: [],
       isFetchingData: true,
-      needsWatering: null,
       show: false,
       requestedInfo: '',
       menuOpen: false,
@@ -51,17 +50,13 @@ class Main extends React.Component {
             light: plant.lighting,
             edible: plant.edible,
             species: plant.species,
-            waterInterval: plant.waterInterval || '72 hrs',
+            waterInterval: plant.waterInterval || {
+              num: 72,
+              time: 'hours',
+            },
             // extra state, not needed for now
             needsWatering: plant.needsWatering,
           });
-
-          localStorage.setItem(
-            plant.id,
-            plant.waterInterval
-            // plant.name,
-            // plant.needsWatering
-          );
         }
 
         this.setState({
@@ -139,33 +134,43 @@ class Main extends React.Component {
     const plant = this.state.plants.find(
       (elem) => elem.id === plantID
     );
+    const waterInterval = plant.waterInterval;
 
-    const plantNeedsWater = plant.needsWatering;
-    if (!plantNeedsWater) {
-      return;
-    }
+    // const clonedPlant = { ...plant, needsWatering: false };
 
-    const wateredPlant = plant.waterInterval;
+    this.setState((prevState) => {
+      const updatedPlants = prevState.plants.map((plant) => {
+        if (plant.id === plantID) {
+          plant.needsWatering = false;
+        }
+        return plant;
+      });
+      return { plants: updatedPlants };
+    });
 
-    // let timeInterval = wateredPlant;
-    let timeInterval = localStorage.getItem(plantID);
+    const timeToNextWatering = moment()
+      .add(waterInterval.num, waterInterval.time)
+      .utc()
+      .format();
 
-    if (!timeInterval) {
-      return;
-    }
-
-    this.tickDown = () => {
-      timeInterval = timeInterval - 1;
-      if (timeInterval === 0) {
-        clearInterval(intervalId);
-        localStorage.setItem(plantID, wateredPlant);
-
-        return;
+    const wateringInterval = setInterval(() => {
+      let currentTime = moment().utc().format();
+      console.log({ currentTime, timeToNextWatering });
+      if (currentTime === timeToNextWatering) {
+        clearInterval(wateringInterval);
+        this.setState((prevState) => {
+          const updatedPlants = prevState.plants.map((plant) => {
+            if (plant.id === plantID) {
+              plant.needsWatering = true;
+            }
+            return plant;
+          });
+          return {
+            plants: updatedPlants,
+          };
+        });
       }
-      localStorage.setItem(plantID, timeInterval);
-    };
-
-    let intervalId = setInterval(this.tickDown, 100);
+    }, 1000);
   };
 
   render() {

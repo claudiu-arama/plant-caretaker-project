@@ -37,8 +37,6 @@ class AddPlantForm extends React.Component {
 
   handleSubmitButton = (event) => {
     event.preventDefault();
-    console.log(this.state);
-    this.props.history.push('/');
   };
 
   render() {

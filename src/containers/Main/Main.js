@@ -173,6 +173,8 @@ class Main extends React.Component {
           });
           return {
             plants: updatedPlants,
+            showPlantWateringModal: true,
+            wateredPlant: plant,
           };
         });
       }

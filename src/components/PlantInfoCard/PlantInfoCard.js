@@ -9,7 +9,7 @@ const plantInfoCard = ({ photo, heading, info }) => {
         <img src={photo} alt="" />
       </div>
       <h3 className={styles.Heading}>
-        {heading ? heading : moment().utc().format()}
+        {heading ? heading : moment().utc().toLocaleString()}
       </h3>
       <p className={styles.Paragraph}>{info}</p>
     </div>

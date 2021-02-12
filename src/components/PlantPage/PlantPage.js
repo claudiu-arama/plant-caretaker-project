@@ -5,7 +5,7 @@ class PlantPage extends React.Component {
     super(props);
     this.state = {};
   }
-  // fetch from file and filter all plants by ID ***************** toDo!
+  // fetch from file and filter all plants by ID *************
   render() {
     const {
       photo,

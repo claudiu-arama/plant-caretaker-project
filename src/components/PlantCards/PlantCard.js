@@ -15,6 +15,8 @@ const plantCard = ({
   edible,
   lighting,
   handlePlantWatering,
+  needsWatering,
+  waterInterval,
   item,
 }) => {
   return (
@@ -63,7 +65,9 @@ const plantCard = ({
           <Icon type="Light" width="25px" />
         </button>
         <button
-          className={styles.WaterTimerButton}
+          className={` styles.WaterTimerButton ${
+            needsWatering ? styles.WaterAlertButton : ''
+          }`}
           onClick={handlePlantWatering.bind(this, item, name)}>
           Water this plant
         </button>

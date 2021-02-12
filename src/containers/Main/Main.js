@@ -52,6 +52,7 @@ class Main extends React.Component {
             light: plant.lighting,
             edible: plant.edible,
             species: plant.species,
+            lastWatered: plant.lastWatered,
             waterInterval: plant.waterInterval || {
               num: 72,
               time: 'hours',
@@ -139,10 +140,15 @@ class Main extends React.Component {
       (elem) => elem.id === plantID
     );
 
+    const timeOfWatering = moment()
+      .utc()
+      .format('dddd, MMMM Do YYYY, h:mm a');
+
     this.setState((prevState) => {
       const updatedPlants = prevState.plants.map((plant) => {
         if (plant.id === plantID) {
           plant.needsWatering = false;
+          plant.lastWatered = timeOfWatering;
         }
         return plant;
       });
@@ -155,14 +161,14 @@ class Main extends React.Component {
 
     const waterInterval = plant.waterInterval;
 
-    const timeToNextWatering = moment()
+    const timeOfNextWatering = moment()
       .add(waterInterval.num, waterInterval.time)
       .utc()
       .format();
 
     const wateringInterval = setInterval(() => {
       let currentTime = moment().utc().format();
-      if (currentTime === timeToNextWatering) {
+      if (currentTime === timeOfNextWatering) {
         clearInterval(wateringInterval);
         this.setState((prevState) => {
           const updatedPlants = prevState.plants.map((plant) => {
@@ -210,6 +216,7 @@ class Main extends React.Component {
         edible={plant.edible}
         lighting={plant.light}
         waterInterval={plant.waterInterval}
+        needsWatering={plant.needsWatering}
         handleButtonClick={this.handlePlantRequirement}
         plantAccessed={() => this.AccesPlantPage(plant.id)}
         handlePlantWatering={this.handlePlantWateringButton}
@@ -230,6 +237,7 @@ class Main extends React.Component {
           edible={plant.edible}
           lighting={plant.light}
           waterInterval={plant.waterInterval}
+          needsWatering={plant.needsWatering}
           handleButtonClick={this.handlePlantRequirement}
           plantAccessed={() => this.AccesPlantPage(plant.id)}
           handlePlantWatering={this.handlePlantWateringButton}
@@ -249,6 +257,7 @@ class Main extends React.Component {
 
     const modalInfo = (
       <PlantInfoCard
+        type="plantInfo"
         heading={requestedInfo.careType}
         info={requestedInfo.careInfo}
         photo={requestedInfo.photo}
@@ -257,9 +266,11 @@ class Main extends React.Component {
 
     const wateredPlantInformation = (
       <PlantInfoCard
-        // heading={wateredPlant.name}
+        type="plantWatering"
+        heading={wateredPlant.name}
         info={wateredPlant.species}
         photo={wateredPlant.photo}
+        time={wateredPlant.lastWatered}
       />
     );
 

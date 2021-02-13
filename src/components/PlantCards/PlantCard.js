@@ -64,13 +64,18 @@ const plantCard = ({
           )}>
           <Icon type="Light" width="25px" />
         </button>
-        <button
-          className={` styles.WaterTimerButton ${
-            needsWatering ? styles.WaterAlertButton : ''
-          }`}
-          onClick={handlePlantWatering.bind(this, item, name)}>
-          Water this plant
-        </button>
+        <div className={styles.WaterButtonProperty}>
+          <button
+            className={` styles.WaterTimerButton ${
+              needsWatering ? styles.WaterAlertButton : ''
+            }`}
+            onClick={handlePlantWatering.bind(this, item, name)}>
+            Water {name}
+          </button>
+          <p>
+            {` water every ${waterInterval.num} ${waterInterval.time}`}
+          </p>
+        </div>
       </div>
     </div>
   );

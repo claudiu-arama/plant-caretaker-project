@@ -1,14 +1,7 @@
 import React from 'react';
 import styles from './PlantInfoCard.module.scss';
 
-const plantInfoCard = ({
-  type,
-  photo,
-  heading,
-  info,
-  time,
-  nextTime,
-}) => {
+const plantInfoCard = ({ type, photo, heading, info, time }) => {
   // **** PlantInfoCard for watering, lighting, edible properties ****
   return type === 'plantInfo' ? (
     <div className={styles.PlantInfoCard}>
@@ -34,3 +27,4 @@ const plantInfoCard = ({
 };
 
 export default plantInfoCard;
+

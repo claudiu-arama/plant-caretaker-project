@@ -1,0 +1,16 @@
+.PlantPageContainer {
+  margin: 0 auto;
+  text-align: center;
+  height: 100vh;
+  background-color: #f7f5fb;
+
+  .PlantPageHeading {
+    padding: 15px 0;
+    background-color: #f7f5fb;
+  }
+
+  .PlantPageImage {
+    width: 55vw;
+    float: left;
+  }
+}

@@ -106,7 +106,7 @@ class Main extends React.Component {
       showPlantInfoModal: !this.state.showPlantInfoModal,
     });
   };
-
+  // toggle burger menu visibiliry below
   toggleBurgerMenu = () => {
     this.setState({ menuOpen: !this.state.menuOpen });
   };

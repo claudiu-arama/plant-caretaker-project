@@ -71,10 +71,10 @@
   border: none;
 
   &:hover {
-    opacity: 0.3;
+    opacity: 0.9;
     box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),
       6px 6px 10px rgba(0, 0, 0, 0.2);
-    background-color: #3579716e;
+    // background-color: #f6f5cc2d;
   }
   &:active {
     opacity: 1;
@@ -89,8 +89,8 @@
 
   box-shadow: 0px 3px 2px 0px rgba(4, 4, 4, 0.3),
     0px 3px 3px 1px rgba(60, 64, 67, 0.15),
-    0 -2px 6px 1px rgba(138, 28, 255, 0.275) inset,
-    0 2px 4px 2px rgba(138, 28, 255, 0.275) inset;
+    0 -2px 6px 1px rgba(28, 157, 189, 0.275) inset,
+    0 -2px 6px 1px rgba(70, 217, 254, 0.275) inset;
 }
 
 .EdibleProperty {
@@ -107,7 +107,7 @@
 
   box-shadow: 0px 3px 2px 0px rgba(4, 4, 4, 0.3),
     0px 3px 3px 1px rgba(60, 64, 67, 0.15),
-    0 -2px 6px 1px rgba(182, 249, 128, 0.275) inset,
+    0 -2px 6px 1px rgba(249, 241, 27, 0.275) inset,
     0 2px 6px 2px rgba(112, 234, 82, 0.275) inset;
 }
 
@@ -115,20 +115,34 @@
   display: flex;
   justify-content: space-between;
   margin: 7px;
-  align-items: flex-end;
+  align-items: center;
 
-  button {
+  .WaterAlertButton {
     height: 42px;
     width: 49px;
     border-radius: 8px;
     border: none;
 
-    background-color: rgba(234, 13, 13, 0.831);
+    background-color: rgba(254, 45, 45, 0.831);
     box-shadow: 0px 3px 2px 0px rgba(4, 4, 4, 0.3),
       0px 3px 3px 1px rgba(60, 64, 67, 0.15),
-      0 -2px 6px 1px rgba(220, 56, 249, 0.275) inset,
-      0 2px 6px 2px rgba(220, 56, 249, 0.275) inset;
+      0 -2px 6px 1px rgba(254, 22, 153, 0.789) inset,
+      0 2px 6px 2px rgba(254, 22, 153, 0.755) inset;
   }
+
+  .WaterButtonAwait {
+    height: 42px;
+    width: 49px;
+    border-radius: 8px;
+    border: none;
+
+    background-color: rgba(170, 247, 62, 0.831);
+    box-shadow: 0px 3px 2px 0px rgba(4, 4, 4, 0.3),
+      0px 3px 3px 1px rgba(60, 64, 67, 0.15),
+      0 -2px 6px 1px rgba(132, 244, 68, 0.275) inset,
+      0 2px 6px 2px rgba(132, 244, 68, 0.275) inset;
+  }
+
   p {
     font-size: 12px;
   }

@@ -38,7 +38,7 @@ const plantCard = ({
           className={styles.WateringProperty}
           onClick={handleButtonClick.bind(
             this,
-            'watering',
+            'Watering Frequency',
             watering,
             photo
           )}>
@@ -48,7 +48,7 @@ const plantCard = ({
           className={styles.EdibleProperty}
           onClick={handleButtonClick.bind(
             this,
-            'edible',
+            'Edibility ',
             edible,
             photo
           )}>
@@ -58,7 +58,7 @@ const plantCard = ({
           className={styles.LightingProperty}
           onClick={handleButtonClick.bind(
             this,
-            'lighting',
+            'Lighting Requirements',
             lighting,
             photo
           )}>
@@ -67,9 +67,12 @@ const plantCard = ({
         <div className={styles.WaterButtonProperty}>
           <button
             className={` styles.WaterTimerButton ${
-              needsWatering ? styles.WaterAlertButton : ''
+              needsWatering
+                ? styles.WaterAlertButton
+                : styles.WaterButtonAwait
             }`}
-            onClick={handlePlantWatering.bind(this, item, name)}>
+            onClick={handlePlantWatering.bind(this, item, name)}
+            disabled={!needsWatering}>
             Water {name}
           </button>
           <p>

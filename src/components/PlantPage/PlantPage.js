@@ -1,11 +1,30 @@
 import React from 'react';
+import styles from './PlantPage.module.scss';
 
 class PlantPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      plant: [],
+    };
   }
-  // fetch from file and filter all plants by ID *************
+
+  componentDidMount() {
+    fetch(
+      'https://plantcaretaker-3606a-default-rtdb.europe-west1.firebasedatabase.app/plants.json'
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        let reqPlant = [];
+        for (let plantID in response) {
+          const plant = response[plantID];
+          if (plant.id === this.props.location.info.id) {
+            reqPlant = plant;
+          }
+        }
+        this.setState({ plant: reqPlant });
+      });
+  }
   render() {
     const {
       photo,
@@ -14,11 +33,14 @@ class PlantPage extends React.Component {
       watering,
       lighting,
       edible,
-    } = this.props.location.info;
+    } = this.state.plant;
     return (
-      <div>
-        <img src={photo} alt="" />
-        <p>Hello! you are here!</p>
+      <div className={styles.PlantPageContainer}>
+        <div className={styles.PlantPageHeading}>
+          <h2>{name}</h2>
+          <h3>{species}</h3>
+        </div>
+        <img src={photo} alt="" className={styles.PlantPageImage} />
         <p>{this.props.item}</p>
       </div>
     );

@@ -71,8 +71,7 @@ const plantCard = ({
                 : styles.WaterButtonAwait
             }`}
             onClick={handlePlantWatering.bind(this, item, name)}
-            // disabled={!needsWatering}
-          >
+            disabled={!needsWatering}>
             Water {name}
           </button>
           <p className={styles.PlantCardWateringInfo}>

@@ -7,6 +7,10 @@ import WateringCan from '../../assets/water-.svg';
 import Edible from '../../assets/fork.svg';
 import Sun from '../../assets/sun.svg';
 import AddButton from '../../assets/plus(1).svg';
+import About from '../../assets/about.svg';
+import Contact from '../../assets/contact.svg';
+import AllSettings from '../../assets/gear.svg';
+import Home from '../../assets/home.svg';
 
 const icon = (props) => {
   const icons = {
@@ -39,6 +43,22 @@ const icon = (props) => {
     Add: {
       src: AddButton,
       alt: 'Add Button Icon',
+    },
+    Settings: {
+      src: AllSettings,
+      alt: 'Settings Icon',
+    },
+    About: {
+      src: About,
+      alt: 'About Icon',
+    },
+    Contact: {
+      src: Contact,
+      alt: 'Contact Icon',
+    },
+    Home: {
+      src: Home,
+      alt: 'Home Icon',
     },
   };
   const type = icons[props.type];

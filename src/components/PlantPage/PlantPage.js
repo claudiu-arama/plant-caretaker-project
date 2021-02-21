@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './PlantPage.module.scss';
+import PlantCard from '../PlantCards/PlantCard';
 
 class PlantPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      plant: [],
+      plant: {},
     };
   }
 
@@ -23,17 +24,27 @@ class PlantPage extends React.Component {
           }
         }
         this.setState({ plant: reqPlant });
-      });
+      })
+      .catch((error) => console.log('Error', error));
   }
   render() {
     const {
       photo,
+      id,
+      water,
+      light,
+      needsWatering,
       name,
       species,
       watering,
       lighting,
       edible,
+      waterInterval,
     } = this.state.plant;
+
+    if (!this.state) {
+      return;
+    }
     return (
       <div className={styles.PlantPageContainer}>
         <div className={styles.PlantPageHeading}>

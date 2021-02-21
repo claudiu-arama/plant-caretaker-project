@@ -22,15 +22,14 @@ const plantCard = ({
   return (
     <div className={styles.plantCardContainer}>
       <div className={styles.LinkContainer} onClick={plantAccessed}>
-        {/* implement action on badge click -> open new route to full plant page */}
         <p className={styles.plantCardName}>"{name}" </p>
-
         <img
           src={photo}
           height={height}
           width={width}
           alt={'image of the plant named' + name}
         />
+
         <p className={styles.plantCardParagraph}>{species}</p>
       </div>
       <div className={styles.PlantInfo}>
@@ -38,7 +37,7 @@ const plantCard = ({
           className={styles.WateringProperty}
           onClick={handleButtonClick.bind(
             this,
-            'Watering Frequency',
+            `Watering Frequency`,
             watering,
             photo
           )}>
@@ -48,7 +47,7 @@ const plantCard = ({
           className={styles.EdibleProperty}
           onClick={handleButtonClick.bind(
             this,
-            'Edibility ',
+            `Edibility`,
             edible,
             photo
           )}>
@@ -58,7 +57,7 @@ const plantCard = ({
           className={styles.LightingProperty}
           onClick={handleButtonClick.bind(
             this,
-            'Lighting Requirements',
+            `Lighting Requirements`,
             lighting,
             photo
           )}>
@@ -72,10 +71,11 @@ const plantCard = ({
                 : styles.WaterButtonAwait
             }`}
             onClick={handlePlantWatering.bind(this, item, name)}
-            disabled={!needsWatering}>
+            // disabled={!needsWatering}
+          >
             Water {name}
           </button>
-          <p>
+          <p className={styles.PlantCardWateringInfo}>
             {` water every ${waterInterval.num} ${waterInterval.time}`}
           </p>
         </div>

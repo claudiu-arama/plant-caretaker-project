@@ -53,6 +53,7 @@ class Main extends React.Component {
             edible: plant.edible,
             species: plant.species,
             lastWatered: plant.lastWatered,
+            nextWatering: plant.nextWatering,
             waterInterval: plant.waterInterval || {
               num: 72,
               time: 'hours',
@@ -91,13 +92,13 @@ class Main extends React.Component {
     }
     const plants = [...this.state.plants];
 
-    const searchedPlants = plants.filter((plant) =>
+    const selectedPlants = plants.filter((plant) =>
       this.search(plant, ['name', 'species'], value)
     );
     this.setState({
       ...this.state,
       query: value,
-      selectedPlants: searchedPlants,
+      selectedPlants: selectedPlants,
     });
   };
   // toggle modal visibility below
@@ -139,16 +140,28 @@ class Main extends React.Component {
     const plant = this.state.plants.find(
       (elem) => elem.id === plantID
     );
+    const waterInterval = plant.waterInterval;
 
     const timeOfWatering = moment()
       .utc()
       .format('dddd, MMMM Do YYYY, h:mm a');
+
+    const nextTimeOfWatering = moment()
+      .add(waterInterval.num, waterInterval.time)
+      .utc()
+      .format('dddd, MMMM Do YYYY, h:mm a');
+
+    const timeOfNextWatering = moment()
+      .add(waterInterval.num, waterInterval.time)
+      .utc()
+      .format();
 
     this.setState((prevState) => {
       const updatedPlants = prevState.plants.map((plant) => {
         if (plant.id === plantID) {
           plant.needsWatering = false;
           plant.lastWatered = timeOfWatering;
+          plant.nextWatering = nextTimeOfWatering;
         }
         return plant;
       });
@@ -158,13 +171,6 @@ class Main extends React.Component {
         showPlantWateringModal: true,
       };
     });
-
-    const waterInterval = plant.waterInterval;
-
-    const timeOfNextWatering = moment()
-      .add(waterInterval.num, waterInterval.time)
-      .utc()
-      .format();
 
     const wateringInterval = setInterval(() => {
       let currentTime = moment().utc().format();
@@ -258,7 +264,7 @@ class Main extends React.Component {
     const modalInfo = (
       <PlantInfoCard
         type="plantInfo"
-        heading={requestedInfo.careType}
+        name={requestedInfo.careType}
         info={requestedInfo.careInfo}
         photo={requestedInfo.photo}
       />
@@ -267,10 +273,12 @@ class Main extends React.Component {
     const wateredPlantInformation = (
       <PlantInfoCard
         type="plantWatering"
-        heading={wateredPlant.name}
+        name={wateredPlant.name}
         info={wateredPlant.species}
         photo={wateredPlant.photo}
-        time={wateredPlant.lastWatered}
+        timeOfWatering={wateredPlant.lastWatered}
+        nextTimeOfWatering={wateredPlant.nextWatering}
+        needsWatering={wateredPlant.needsWatering}
       />
     );
 
@@ -310,7 +318,13 @@ class Main extends React.Component {
             <Route path="/addPlantForm" component={AddPlantForm} />
             <Route
               path={this.props.match.url + ':id'}
-              render={(props) => <PlantPage {...props} />}
+              render={(props) => (
+                <PlantPage
+                  {...props}
+                  handleButtonClick={this.handlePlantRequirement}
+                  handlePlantWatering={this.handlePlantWateringButton}
+                />
+              )}
             />
           </Switch>
         </main>

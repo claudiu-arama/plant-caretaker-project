@@ -23,6 +23,7 @@ const plantInfoCard = ({
         <p className={styles.Paragraph}>{info}</p>
       </div>
     </div>
+    
   ) : // **** PlantInfoCard for watering schedule notification ****
   type === 'plantWatering' ? (
     !needsWatering ? (

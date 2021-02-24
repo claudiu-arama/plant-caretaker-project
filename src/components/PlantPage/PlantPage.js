@@ -3,12 +3,15 @@ import styles from './PlantPage.module.scss';
 import PlantCard from '../PlantCards/PlantCard';
 import Icon from '../../controls/Icons/Icons';
 import moment from 'moment';
+import Modal from '../../UI/Modal/Modal';
+import PlantInfoCard from '../PlantInfoCard/PlantInfoCard';
 
 class PlantPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       plant: [],
+      showModal: false,
     };
   }
 
@@ -51,7 +54,9 @@ class PlantPage extends React.Component {
 
   handleWatering = (id, name) => {
     this.props.handlePlantWatering(id, name);
+
     const plant = this.state.plant;
+
     const { waterInterval } = plant;
     const timeOfWatering = moment()
       .utc()
@@ -71,6 +76,9 @@ class PlantPage extends React.Component {
       plant.needsWatering = false;
       plant.lastWatered = timeOfWatering;
       plant.nextWatering = nextTimeOfWatering;
+      return {
+        showModal: true,
+      };
     });
 
     const wateringInterval = setInterval(() => {
@@ -79,9 +87,16 @@ class PlantPage extends React.Component {
         clearInterval(wateringInterval);
         this.setState((prevState) => {
           plant.needsWatering = true;
+          return {
+            showModal: true,
+          };
         });
       }
     }, 1000);
+  };
+
+  controlModal = () => {
+    this.setState({ showModal: false });
   };
 
   render() {
@@ -89,6 +104,8 @@ class PlantPage extends React.Component {
       photo,
       id,
       needsWatering,
+      nextWatering,
+      lastWatered,
       name,
       species,
       watering,
@@ -101,6 +118,18 @@ class PlantPage extends React.Component {
     return (
       <div className={styles.PlantPageContainer}>
         <div className={styles.PlantPageHeading}>
+          <Modal
+            show={this.state.showModal}
+            clicked={this.controlModal}>
+            <PlantInfoCard
+              type="plantWatering"
+              photo={photo}
+              name={name}
+              needsWatering={needsWatering}
+              timeOfWatering={lastWatered}
+              nextTimeOfWatering={nextWatering}
+            />
+          </Modal>
           <h2>{name}</h2>
           <h3>{species}</h3>
         </div>
@@ -132,7 +161,6 @@ class PlantPage extends React.Component {
               `water this plant every ${waterInterval.num} ${waterInterval.time}`}
           </p>
         </div>
-        
       </div>
     );
   }

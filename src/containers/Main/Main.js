@@ -140,6 +140,7 @@ class Main extends React.Component {
     const plant = this.state.plants.find(
       (elem) => elem.id === plantID
     );
+
     const waterInterval = plant.waterInterval;
 
     const timeOfWatering = moment()
@@ -163,8 +164,10 @@ class Main extends React.Component {
           plant.lastWatered = timeOfWatering;
           plant.nextWatering = nextTimeOfWatering;
         }
+
         return plant;
       });
+
       return {
         plants: updatedPlants,
         wateredPlant: plant,

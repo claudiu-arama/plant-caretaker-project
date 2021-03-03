@@ -28,7 +28,6 @@ class AddPlantForm extends React.Component {
     const name = target.name;
 
     this.setState({ [name]: plantPhoto });
-    console.log(this.state);
   };
 
   handleCancelButton = () => {
@@ -37,6 +36,22 @@ class AddPlantForm extends React.Component {
 
   handleSubmitButton = (event) => {
     event.preventDefault();
+    const postedData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access': 'application/json',
+      },
+      body: JSON.stringify({ ...this.state }),
+    };
+    console.log(postedData);
+    fetch(
+      'https://plantcaretaker-3606a-default-rtdb.europe-west1.firebasedatabase.app/plants.json',
+      postedData
+    )
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
   };
 
   render() {

@@ -14,7 +14,8 @@ import { Route, Link, Switch, withRouter } from 'react-router-dom';
 import BurgerMenu from '../../components/BurgerMenu/BurgerMenu';
 import PlantPage from '../../components/PlantPage/PlantPage';
 import moment from 'moment';
-import plantInfoCard from '../../components/PlantInfoCard/PlantInfoCard';
+import AboutPage from '../../components/About/About';
+import Contact from '../../components/Contact/Contact';
 
 class Main extends React.Component {
   constructor(props) {
@@ -291,6 +292,8 @@ class Main extends React.Component {
         <BurgerMenu isOpen={this.state.menuOpen} />
         <main>
           <Switch>
+            <Route path="/about" exact component={AboutPage}></Route>
+            <Route path="/contact" exact component={Contact}></Route>
             <Route path="/" exact>
               <div className={styles.Main}>
                 <div className={styles.SearchField}>
@@ -322,11 +325,20 @@ class Main extends React.Component {
             <Route
               path={this.props.match.url + ':id'}
               render={(props) => (
-                <PlantPage
-                  {...props}
-                  handleButtonClick={this.handlePlantRequirement}
-                  handlePlantWatering={this.handlePlantWateringButton}
-                />
+                <div>
+                  <PlantPage
+                    {...props}
+                    // handleButtonClick={this.handlePlantRequirement}
+                    handlePlantWatering={
+                      this.handlePlantWateringButton
+                    }
+                  />
+                  <Modal
+                    show={showPlantWateringModal}
+                    clicked={this.togglePlantWateringModal}>
+                    {wateredPlantInformation}
+                  </Modal>
+                </div>
               )}
             />
           </Switch>

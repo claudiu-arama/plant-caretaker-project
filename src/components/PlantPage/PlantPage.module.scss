@@ -1,17 +1,70 @@
+@import '../../design-token/scss-variables';
+
 .PlantPageContainer {
   padding: 10px;
   margin: 0 auto;
+  min-height: 100vh;
   text-align: center;
-  height: 100vh;
-  background-color: #f7f5fb;
+  background-color: $plantPageBackground;
+  color: $plantName;
 
   .PlantPageHeading {
     padding: 15px 0;
-    background-color: #f7f5fb;
   }
 
   .PlantPageImage {
     width: 55vw;
     float: left;
+  }
+
+  .PlantPageNameHeading {
+    font-size: 21px;
+  }
+
+  .plantPageSpeciesHeading {
+    font-size: 18px;
+  }
+
+  .PlantPageDescriptionHeading {
+    font-size: 16px;
+  }
+
+  .PlantPageDescriptionText {
+    font-size: 13px;
+  }
+
+  .PlantPageIconContainer {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .PlantPageInfoWatering,
+  .PlantPageInfoLighting,
+  .PlantPageInfoEdible {
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+  }
+  .PlantPageWateringIcon,
+  .PlantPageLightingIcon,
+  .PlantPageEdibleIcon {
+    display: flex;
+    border-radius: 10px;
+    padding: 6px;
+  }
+
+  .PlantPageWateringIcon {
+    background-color: $waterButtonColor;
+  }
+
+  .PlantPageLightingIcon {
+    background-color: $lightingButtonColor;
+    margin-top: 6px;
+  }
+
+  .PlantPageEdibleIcon {
+    background-color: $edibleButtonColor;
+    margin-top: 6px;
   }
 }

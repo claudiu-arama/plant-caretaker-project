@@ -11,7 +11,7 @@ class PlantPage extends React.Component {
     super(props);
     this.state = {
       plant: [],
-      showModal: false,
+      // showModal: false,
     };
   }
 
@@ -25,25 +25,6 @@ class PlantPage extends React.Component {
         for (let plantID in response) {
           const plant = response[plantID];
           if (plant.id === this.props.location.info.id) {
-            // reqPlant.push({
-            //   id: plant.id,
-            //   name: plant.name,
-            //   photo:
-            //     plant.photo ||
-            //     'https://images.all-free-download.com/images/graphiclarge/orchid_pot_drawing_3d_retro_design_6833722.jpg',
-            //   water: plant.watering,
-            //   light: plant.lighting,
-            //   edible: plant.edible,
-            //   species: plant.species,
-            //   lastWatered: plant.lastWatered,
-            //   nextWatering: plant.nextWatering,
-            //   waterInterval: plant.waterInterval || {
-            //     num: 72,
-            //     time: 'hours',
-            //   },
-            //   description: plant.description,
-            // });
-
             reqPlant = plant;
           }
         }
@@ -72,7 +53,7 @@ class PlantPage extends React.Component {
       .utc()
       .format();
 
-    this.setState((prevState) => {
+    this.setState(() => {
       plant.needsWatering = false;
       plant.lastWatered = timeOfWatering;
       plant.nextWatering = nextTimeOfWatering;
@@ -85,7 +66,7 @@ class PlantPage extends React.Component {
       let currentTime = moment().utc().format();
       if (currentTime === timeOfNextWatering) {
         clearInterval(wateringInterval);
-        this.setState((prevState) => {
+        this.setState(() => {
           plant.needsWatering = true;
           return {
             showModal: true,
@@ -118,7 +99,7 @@ class PlantPage extends React.Component {
     return (
       <div className={styles.PlantPageContainer}>
         <div className={styles.PlantPageHeading}>
-          <Modal
+          {/* <Modal
             show={this.state.showModal}
             clicked={this.controlModal}>
             <PlantInfoCard
@@ -129,27 +110,50 @@ class PlantPage extends React.Component {
               timeOfWatering={lastWatered}
               nextTimeOfWatering={nextWatering}
             />
-          </Modal>
-          <h2>{name}</h2>
-          <h3>{species}</h3>
+          </Modal> */}
+          <h2 className={styles.PlantPageNameHeading}>{name}</h2>
+          <h3 className={styles.plantPageSpeciesHeading}>
+            {species}
+          </h3>
         </div>
         <div>
           <img src={photo} alt="" className={styles.PlantPageImage} />
-          <h3>
+          <h3 className={styles.PlantPageDescriptionHeading}>
             Description: <br></br>
           </h3>
-          <p> {description}</p>
+          <p className={styles.PlantPageDescriptionText}>
+            {description}
+          </p>
         </div>
-        <div>
-          <Icon type="Water" width="25px" />
-          {watering}
-          <Icon type="Edible" width="25px" />
-          {edible}
-          <Icon type="Light" width="25px" />
-          {lighting}
+        <div className={styles.PlantPageIconContainer}>
+          <div className={styles.PlantPageInfoWatering}>
+            <div className={styles.PlantPageWateringIcon}>
+              <Icon type="Water" width="25px" />
+            </div>
+            <div style={{ margin: '8px auto', width: '80vw' }}>
+              {edible}
+            </div>
+          </div>
+          <div className={styles.PlantPageInfoLighting}>
+            <div className={styles.PlantPageLightingIcon}>
+              <Icon type="Light" width="25px" />
+            </div>
+            <div style={{ margin: '8px auto', width: '80vw' }}>
+              {lighting}
+            </div>
+          </div>
+          <div className={styles.PlantPageInfoEdible}>
+            <div className={styles.PlantPageEdibleIcon}>
+              <Icon type="Edible" width="25px" />
+            </div>
+            <div style={{ margin: '8px auto', width: '80vw' }}>
+              {watering}
+            </div>
+          </div>
         </div>
         <div>
           <button
+            className={styles.PlantPageWaterButton}
             disabled={!needsWatering}
             onClick={this.handleWatering.bind(
               this,

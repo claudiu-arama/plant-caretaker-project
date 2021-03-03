@@ -1,6 +1,7 @@
 import React from 'react';
 import Menu from 'react-burger-menu/lib/menus/slide';
 import './BurgerMenuStyle.scss';
+import Icon from '../../controls/Icons/Icons';
 
 class BurgerMenu extends React.Component {
   showSettings(event) {
@@ -9,22 +10,22 @@ class BurgerMenu extends React.Component {
 
   render() {
     return (
-      <div>
-        <Menu width={'45%'} right isOpen={this.props.isOpen}>
+      <div className="custom-edit">
+        <Menu width={'20%'} right isOpen={this.props.isOpen}>
           <a id="home" className="menu-item" href="/">
-            Home
+            <Icon type="Home" width="25px" />
           </a>
           <a id="about" className="menu-item" href="/about">
-            About
+            <Icon type="About" width="25px" />
           </a>
           <a id="contact" className="menu-item" href="/contact">
-            Contact
+            <Icon type="Contact" width="25px" />
           </a>
           <a
             onClick={this.showSettings}
-            className="menu-item--small"
+            className="menu-item"
             href="/">
-            Settings
+            <Icon type="Settings" width="25px" />
           </a>
         </Menu>
       </div>

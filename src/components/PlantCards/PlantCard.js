@@ -3,54 +3,81 @@ import styles from './PlantCard.module.scss';
 import Icon from '../../controls/Icons/Icons';
 import PropTypes from 'prop-types';
 
-const plantCard = (props) => {
+const plantCard = ({
+  plantAccessed,
+  name,
+  photo,
+  height,
+  width,
+  species,
+  watering,
+  handleButtonClick,
+  edible,
+  lighting,
+  handlePlantWatering,
+  needsWatering,
+  waterInterval,
+  item,
+}) => {
   return (
     <div className={styles.plantCardContainer}>
-      <div
-        className={styles.LinkContainer}
-        onClick={props.plantAccessed}>
-        {/* implement action on badge click -> open new route to full plant page */}
-        <p className={styles.plantCardName}>"{props.name}" </p>
-
+      <div className={styles.LinkContainer} onClick={plantAccessed}>
+        <p className={styles.plantCardName}>"{name}" </p>
         <img
-          src={props.photo}
-          height={props.height}
-          width={props.width}
-          alt={'image of the plant named' + props.name}
+          src={photo}
+          height={height}
+          width={width}
+          alt={'image of the plant named' + name}
         />
-        <p className={styles.plantCardParagraph}>{props.species}</p>
+
+        <p className={styles.plantCardParagraph}>{species}</p>
       </div>
       <div className={styles.PlantInfo}>
         <button
           className={styles.WateringProperty}
-          onClick={props.handleButtonClick.bind(
+          onClick={handleButtonClick.bind(
             this,
-            'watering',
-            props.watering,
-            props.photo
+            `Watering Frequency`,
+            watering,
+            photo
           )}>
           <Icon type="Water" width="25px" />
         </button>
         <button
           className={styles.EdibleProperty}
-          onClick={props.handleButtonClick.bind(
+          onClick={handleButtonClick.bind(
             this,
-            'edible',
-            props.edible,
-            props.photo
+            `Edibility`,
+            edible,
+            photo
           )}>
           <Icon type="Edible" width="25px" />
         </button>
         <button
           className={styles.LightingProperty}
-          onClick={props.handleButtonClick.bind(
+          onClick={handleButtonClick.bind(
             this,
-            'lighting',
-            props.lighting,
-            props.photo
+            `Lighting Requirements`,
+            lighting,
+            photo
           )}>
           <Icon type="Light" width="25px" />
         </button>
+        <div className={styles.WaterButtonProperty}>
+          <button
+            className={` styles.WaterTimerButton ${
+              needsWatering
+                ? styles.WaterAlertButton
+                : styles.WaterButtonAwait
+            }`}
+            onClick={handlePlantWatering.bind(this, item, name)}
+            disabled={!needsWatering}>
+            Water {name}
+          </button>
+          <p className={styles.PlantCardWateringInfo}>
+            {` water every ${waterInterval.num} ${waterInterval.time}`}
+          </p>
+        </div>
       </div>
     </div>
   );

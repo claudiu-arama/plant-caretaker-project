@@ -1,11 +1,4 @@
-$bg: #fff;
-$text: #382b22;
-$light-pink: #fff0f0;
-$pink: #ffe9e9;
-$dark-pink: #f9c4d2;
-$pink-border: #b18597;
-$pink-shadow: #ffe3e2;
-
+@import '../../design-token//scss-variables';
 * {
   box-sizing: border-box;
   &::before,
@@ -14,15 +7,20 @@ $pink-shadow: #ffe3e2;
   }
 }
 
+.WaterAlertButton {
+  background-color: rgb(255, 88, 63);
+  padding: 5px;
+}
+
 .plantCardContainer {
   cursor: pointer;
-  height: 250px;
+  height: 300px;
   width: 162px;
   background-color: #fff;
   text-align: center;
   margin: 10px;
   border-radius: 4px;
-  // border: 1px solid rgb(245, 238, 238);
+  border: 1px solid rgb(245, 238, 238);
   -webkit-box-shadow: 0 2px 4px 0 rgba(72, 72, 72, 0.83),
     0 10px 15px 0 rgba(126, 126, 126, 0.12),
     0 -2px 6px 1px rgba(199, 199, 199, 0.55) inset,
@@ -33,7 +31,7 @@ $pink-shadow: #ffe3e2;
     0 2px 4px 2px rgba(255, 255, 255, 0.83) inset;
   box-shadow: 0 2px 4px 0 rgba(72, 72, 72, 0.83),
     0 10px 15px 0 rgba(126, 126, 126, 0.12),
-    0 -2px 6px 1px rgba(199, 199, 199, 0.55) inset,
+    0 -2px 6px 1px rgba(199, 199, 199, 0.375) inset,
     0 2px 4px 2px rgba(255, 255, 255, 0.83) inset;
 
   img {
@@ -56,6 +54,7 @@ $pink-shadow: #ffe3e2;
   display: flex;
   justify-content: space-evenly;
   align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 .WateringProperty,
@@ -66,25 +65,17 @@ $pink-shadow: #ffe3e2;
   align-items: center;
   width: 44px;
   height: 42px;
-  position: relative;
-  background: #f0f0f3;
   margin-top: 8px;
   border-radius: 8px;
-  text-align: center;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  line-height: 100px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 32px;
-  font-weight: semibold;
+  border: none;
 
-  box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),
-    6px 6px 10px rgba(0, 0, 0, 0.2);
   &:hover {
-    opacity: 0.3;
+    opacity: 0.9;
     box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),
       6px 6px 10px rgba(0, 0, 0, 0.2);
-    background-color: #3579716e;
+    // background-color: #f6f5cc2d;
   }
   &:active {
     opacity: 1;
@@ -94,9 +85,83 @@ $pink-shadow: #ffe3e2;
   }
 }
 
+.WateringProperty {
+  background-color: $waterButtonColor;
+
+  box-shadow: 0px 3px 2px 0px rgba(4, 4, 4, 0.3),
+    0px 3px 3px 1px rgba(60, 64, 67, 0.15),
+    0 -2px 6px 1px rgba(28, 157, 189, 0.275) inset,
+    0 -2px 6px 1px rgba(70, 217, 254, 0.275) inset;
+}
+
+.EdibleProperty {
+  background-color: $edibleButtonColor;
+
+  box-shadow: 0px 3px 2px 0px rgba(4, 4, 4, 0.3),
+    0px 3px 3px 1px rgba(60, 64, 67, 0.15),
+    0 -2px 6px 1px rgba(119, 171, 255, 0.275) inset,
+    0 2px 4px 2px rgba(119, 171, 255, 0.275) inset;
+}
+
+.LightingProperty {
+  background-color: $lightingButtonColor;
+
+  box-shadow: 0px 3px 2px 0px rgba(4, 4, 4, 0.3),
+    0px 3px 3px 1px rgba(60, 64, 67, 0.15),
+    0 -2px 6px 1px rgba(249, 241, 27, 0.275) inset,
+    0 2px 6px 2px rgba(112, 234, 82, 0.275) inset;
+}
+
+.WaterButtonProperty {
+  display: flex;
+  justify-content: space-between;
+  margin: 7px;
+  align-items: center;
+
+  .WaterAlertButton {
+    height: 42px;
+    width: 49px;
+    border-radius: 8px;
+    border: none;
+
+    background-color: rgba(254, 45, 45, 0.831);
+    box-shadow: 0px 3px 2px 0px rgba(4, 4, 4, 0.3),
+      0px 3px 3px 1px rgba(60, 64, 67, 0.15),
+      0 -2px 6px 1px rgba(254, 22, 153, 0.789) inset,
+      0 2px 6px 2px rgba(254, 22, 153, 0.755) inset;
+  }
+
+  .WaterButtonAwait {
+    height: 42px;
+    width: 49px;
+    border-radius: 8px;
+    border: none;
+
+    background-color: rgba(170, 247, 62, 0.831);
+    box-shadow: 0px 3px 2px 0px rgba(4, 4, 4, 0.3),
+      0px 3px 3px 1px rgba(60, 64, 67, 0.15),
+      0 -2px 6px 1px rgba(132, 244, 68, 0.275) inset,
+      0 2px 6px 2px rgba(132, 244, 68, 0.275) inset;
+  }
+
+  p {
+    font-size: 12px;
+  }
+}
+
 .LinkContainer {
   a {
     text-decoration: none;
     color: #000;
   }
+}
+
+.PlantCardWateringInfo {
+  border-radius: 6px;
+  border: 1px solid rgb(101, 97, 97);
+  width: 65%;
+  height: 42px;
+  background-color: rgb(254, 230, 230);
+  display: flex;
+  align-items: center;
 }

@@ -13,6 +13,9 @@ import AddPlantForm from '../../components/Forms/AddPlantForm/AddPlantForm';
 import { Route, Link, Switch, withRouter } from 'react-router-dom';
 import BurgerMenu from '../../components/BurgerMenu/BurgerMenu';
 import PlantPage from '../../components/PlantPage/PlantPage';
+import moment from 'moment';
+import AboutPage from '../../components/About/About';
+import Contact from '../../components/Contact/Contact';
 
 class Main extends React.Component {
   constructor(props) {
@@ -23,19 +26,23 @@ class Main extends React.Component {
       query: '',
       selectedPlants: [],
       isFetchingData: true,
-      isActive: null,
-      show: false,
+      showPlantInfoModal: false,
+      showPlantWateringModal: false,
+      wateredPlant: [],
       requestedInfo: '',
       menuOpen: false,
     };
   }
   // set state from external source
   componentDidMount() {
-    fetch('./importData.json')
+    fetch(
+      'https://plantcaretaker-3606a-default-rtdb.europe-west1.firebasedatabase.app/plants.json'
+    )
       .then((response) => response.json())
       .then((response) => {
         const plants = [];
-        for (let plant of response.plants) {
+        for (let plantID in response) {
+          const plant = response[plantID];
           plants.push({
             id: plant.id,
             name: plant.name,
@@ -46,6 +53,14 @@ class Main extends React.Component {
             light: plant.lighting,
             edible: plant.edible,
             species: plant.species,
+            lastWatered: plant.lastWatered,
+            nextWatering: plant.nextWatering,
+            waterInterval: plant.waterInterval || {
+              num: 72,
+              time: 'hours',
+            },
+            // extra state, not needed for now
+            needsWatering: plant.needsWatering,
           });
         }
 
@@ -78,20 +93,22 @@ class Main extends React.Component {
     }
     const plants = [...this.state.plants];
 
-    const searchedPlants = plants.filter((plant) =>
+    const selectedPlants = plants.filter((plant) =>
       this.search(plant, ['name', 'species'], value)
     );
     this.setState({
       ...this.state,
       query: value,
-      selectedPlants: searchedPlants,
+      selectedPlants: selectedPlants,
     });
   };
   // toggle modal visibility below
-  toggleModal = () => {
-    this.setState({ show: !this.state.show });
+  togglePlantInfoModal = () => {
+    this.setState({
+      showPlantInfoModal: !this.state.showPlantInfoModal,
+    });
   };
-
+  // toggle burger menu visibiliry below
   toggleBurgerMenu = () => {
     this.setState({ menuOpen: !this.state.menuOpen });
   };
@@ -105,14 +122,85 @@ class Main extends React.Component {
     });
   };
 
-  // handle buttons for watering, lighting and edibility below
+  // handle buttons for watering, lighting and edibility info below
   handlePlantRequirement = (careType, careInfo, photo) => {
-    this.toggleModal();
+    this.togglePlantInfoModal();
     if (!careType || !careInfo) {
       return;
     }
     const modalInfo = { careType, careInfo, photo };
     this.setState({ requestedInfo: modalInfo });
+  };
+
+  //handle button for marking the watering of a plant
+  handlePlantWateringButton = (plantID, plantName) => {
+    if (!plantID || !plantName) {
+      return;
+    }
+
+    const plant = this.state.plants.find(
+      (elem) => elem.id === plantID
+    );
+
+    const waterInterval = plant.waterInterval;
+
+    const timeOfWatering = moment()
+      .utc()
+      .format('dddd, MMMM Do YYYY, h:mm a');
+
+    const nextTimeOfWatering = moment()
+      .add(waterInterval.num, waterInterval.time)
+      .utc()
+      .format('dddd, MMMM Do YYYY, h:mm a');
+
+    const timeOfNextWatering = moment()
+      .add(waterInterval.num, waterInterval.time)
+      .utc()
+      .format();
+
+    this.setState((prevState) => {
+      const updatedPlants = prevState.plants.map((plant) => {
+        if (plant.id === plantID) {
+          plant.needsWatering = false;
+          plant.lastWatered = timeOfWatering;
+          plant.nextWatering = nextTimeOfWatering;
+        }
+
+        return plant;
+      });
+
+      return {
+        plants: updatedPlants,
+        wateredPlant: plant,
+        showPlantWateringModal: true,
+      };
+    });
+
+    const wateringInterval = setInterval(() => {
+      let currentTime = moment().utc().format();
+      if (currentTime === timeOfNextWatering) {
+        clearInterval(wateringInterval);
+        this.setState((prevState) => {
+          const updatedPlants = prevState.plants.map((plant) => {
+            if (plant.id === plantID) {
+              plant.needsWatering = true;
+            }
+            return plant;
+          });
+          return {
+            plants: updatedPlants,
+            showPlantWateringModal: true,
+            wateredPlant: plant,
+          };
+        });
+      }
+    }, 1000);
+  };
+
+  togglePlantWateringModal = () => {
+    this.setState({
+      showPlantWateringModal: !this.state.showPlantWateringModal,
+    });
   };
 
   render() {
@@ -122,6 +210,9 @@ class Main extends React.Component {
       isFetchingData,
       query,
       requestedInfo,
+      wateredPlant,
+      showPlantInfoModal,
+      showPlantWateringModal,
     } = this.state;
 
     const plantsRendered = plants.map((plant) => (
@@ -134,8 +225,11 @@ class Main extends React.Component {
         watering={plant.water}
         edible={plant.edible}
         lighting={plant.light}
+        waterInterval={plant.waterInterval}
+        needsWatering={plant.needsWatering}
         handleButtonClick={this.handlePlantRequirement}
         plantAccessed={() => this.AccesPlantPage(plant.id)}
+        handlePlantWatering={this.handlePlantWateringButton}
       />
     ));
 
@@ -148,11 +242,15 @@ class Main extends React.Component {
           species={plant.species}
           photo={plant.photo}
           key={plant.id}
+          item={plant.id}
           watering={plant.water}
           edible={plant.edible}
           lighting={plant.light}
+          waterInterval={plant.waterInterval}
+          needsWatering={plant.needsWatering}
           handleButtonClick={this.handlePlantRequirement}
           plantAccessed={() => this.AccesPlantPage(plant.id)}
+          handlePlantWatering={this.handlePlantWateringButton}
         />
       ))
     );
@@ -169,9 +267,22 @@ class Main extends React.Component {
 
     const modalInfo = (
       <PlantInfoCard
-        heading={requestedInfo.careType}
+        type="plantInfo"
+        name={requestedInfo.careType}
         info={requestedInfo.careInfo}
         photo={requestedInfo.photo}
+      />
+    );
+
+    const wateredPlantInformation = (
+      <PlantInfoCard
+        type="plantWatering"
+        name={wateredPlant.name}
+        info={wateredPlant.species}
+        photo={wateredPlant.photo}
+        timeOfWatering={wateredPlant.lastWatered}
+        nextTimeOfWatering={wateredPlant.nextWatering}
+        needsWatering={wateredPlant.needsWatering}
       />
     );
 
@@ -181,6 +292,8 @@ class Main extends React.Component {
         <BurgerMenu isOpen={this.state.menuOpen} />
         <main>
           <Switch>
+            <Route path="/about" exact component={AboutPage}></Route>
+            <Route path="/contact" exact component={Contact}></Route>
             <Route path="/" exact>
               <div className={styles.Main}>
                 <div className={styles.SearchField}>
@@ -194,9 +307,14 @@ class Main extends React.Component {
                 </div>
 
                 <Modal
-                  show={this.state.show}
-                  clicked={this.toggleModal}>
+                  show={showPlantInfoModal}
+                  clicked={this.togglePlantInfoModal}>
                   {modalInfo}
+                </Modal>
+                <Modal
+                  show={showPlantWateringModal}
+                  clicked={this.togglePlantWateringModal}>
+                  {wateredPlantInformation}
                 </Modal>
 
                 {mainPlantsRender}
@@ -206,7 +324,22 @@ class Main extends React.Component {
             <Route path="/addPlantForm" component={AddPlantForm} />
             <Route
               path={this.props.match.url + ':id'}
-              render={(props) => <PlantPage {...props} />}
+              render={(props) => (
+                <div>
+                  <PlantPage
+                    {...props}
+                    // handleButtonClick={this.handlePlantRequirement}
+                    handlePlantWatering={
+                      this.handlePlantWateringButton
+                    }
+                  />
+                  <Modal
+                    show={showPlantWateringModal}
+                    clicked={this.togglePlantWateringModal}>
+                    {wateredPlantInformation}
+                  </Modal>
+                </div>
+              )}
             />
           </Switch>
         </main>

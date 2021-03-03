@@ -1,7 +1,7 @@
 .Modal {
   position: fixed;
-  background: rgba(255, 165, 165, 1);
-  width: 60vw;
+  background: #fffafb;
+  min-width: 200px;
   height: auto;
   top: 50%;
   left: 50%;
@@ -10,6 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 12px;
   -webkit-box-shadow: 0 2px 4px 0 rgba(72, 72, 72, 0.83),
     0 10px 15px 0 rgba(126, 126, 126, 0.12),
     0 -2px 6px 1px rgba(199, 199, 199, 0.55) inset,
@@ -36,16 +37,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(180, 250, 207, 0.567);
+  background: rgba(170, 170, 170, 0.567);
   display: block;
 }
 
 .ModalHide {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
   display: none;
 }
